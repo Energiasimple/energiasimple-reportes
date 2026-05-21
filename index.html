@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Energía Simple — Sistema de Reportes</title>
+<title>SolarReport — Plataforma FV Profesional</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -472,9 +472,9 @@ input, select, textarea { font-family: var(--font); }
     <button class="btn-primary" onclick="doLogin()">Entrar al sistema</button>
     <div class="login-hint">
       <b>Usuarios demo:</b>
-      admin@energiasimple.com / admin123 (Admin)<br>
-      supervisor@energiasimple.com / sup123 (Supervisor)<br>
-      tecnico1@energiasimple.com / tec123 (Técnico)
+      admin@energiasimple.com / admin123 — Administrador (Energía Simple)<br>
+      proveedor1@solartec.com / prov123 — Proveedor SolarTec MTY<br>
+      proveedor2@energiapro.com / prov123 — Proveedor EnergiaPro
     </div>
   </div>
 </div>
@@ -507,7 +507,11 @@ input, select, textarea { font-family: var(--font); }
       <div class="nav-section admin-only" style="display:none">Administración</div>
       <button class="nav-item admin-only" style="display:none" onclick="showView('usuarios')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        Usuarios
+        Proveedores
+      </button>
+      <button class="nav-item admin-only" style="display:none" onclick="showView('inteligencia')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        Inteligencia
       </button>
     </nav>
     <div class="sidebar-user">
@@ -906,11 +910,9 @@ input, select, textarea { font-family: var(--font); }
 let currentUser = null;
 let reportes = JSON.parse(localStorage.getItem('es_reportes') || '[]');
 let usuarios  = JSON.parse(localStorage.getItem('es_usuarios') || 'null') || [
-  {id:'1', nombre:'Admin Sistema',    email:'admin@energiasimple.com',      pass:'admin123',  rol:'admin'},
-  {id:'2', nombre:'Carlos Supervisor',email:'supervisor@energiasimple.com', pass:'sup123',    rol:'supervisor'},
-  {id:'3', nombre:'Luis Martínez',    email:'tecnico1@energiasimple.com',   pass:'tec123',    rol:'tecnico'},
-  {id:'4', nombre:'Jorge Ramírez',    email:'tecnico2@energiasimple.com',   pass:'tec123',    rol:'tecnico'},
-  {id:'5', nombre:'Ana Torres',       email:'tecnico3@energiasimple.com',   pass:'tec123',    rol:'tecnico'},
+  {id:'1',nombre:'Administrador',empresa:'Energía Simple',email:'admin@energiasimple.com',pass:'admin123',rol:'admin',color:'#3D6117'},
+  {id:'2',nombre:'Carlos Mendoza',empresa:'SolarTec MTY',email:'proveedor1@solartec.com',pass:'prov123',rol:'proveedor',color:'#2563EB',tel:'81-1234-5678',rfc:'STE120101ABC',dir:'Av. Constitución 500, Monterrey', logo:null},
+  {id:'3',nombre:'Ana Ramírez',empresa:'EnergiaPro',email:'proveedor2@energiapro.com',pass:'prov123',rol:'proveedor',color:'#7C3AED',tel:'81-9876-5432',rfc:'EPR130202DEF',dir:'Blvd. Díaz Ordaz 1200, Monterrey', logo:null},
 ];
 
 let formStep = 0;
