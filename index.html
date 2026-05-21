@@ -811,7 +811,13 @@ function doLogin(){
   } else {
     document.querySelectorAll('.prov-only').forEach(el=>el.style.display='');
   }
-  initForm();renderDash();
+  initForm();
+  // Activate inicio view
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.getElementById('vInicio').classList.add('active');
+  document.querySelectorAll('.ni').forEach(el=>el.classList.remove('active'));
+  document.querySelector('.ni[onclick*="inicio"]')?.classList.add('active');
+  renderDash();
 }
 function doLogout(){
   CU=null;
