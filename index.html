@@ -764,7 +764,6 @@ let usuarios=JSON.parse(localStorage.getItem('sr3_usr')||'null')||[
 
 // FORM STATE
 let fStep=0, photos={}, stData={}, encDec=null, reqCorr=null, tipoSel=null, secsActivas=new Set();
-let photoData = {};
 
 const TIPOS=[
   {id:'prev',icon:'🔧',name:'Mantenimiento preventivo',desc:'Revisión y limpieza programada'},
@@ -785,7 +784,6 @@ const SECS=[
 ];
 
 const STLABELS={ok:'✓ OK',warn:'⚠ Obs.',bad:'✗ Falla',na:'N/A'};
-const AVCOLORS=['#16a34a','#2563eb','#7c3aed','#ea580c','#0891b2','#dc2626'];
 const STEPS_LABELS=['Tipo','Datos','Secciones','Mediciones','Conclusiones','Resumen'];
 
 function save(){localStorage.setItem('sr3_rep',JSON.stringify(reportes));localStorage.setItem('sr3_usr',JSON.stringify(usuarios))}
