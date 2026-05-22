@@ -402,6 +402,9 @@ a{color:var(--green);text-decoration:none}
 .bar-fill.a{background:var(--amber)}
 .bar-fill.r{background:var(--red)}
 .bar-val{font-size:12px;font-weight:600;color:var(--slate700);min-width:24px;text-align:right}
+.stbtn{padding:7px 14px;border-radius:99px;border:1.5px solid var(--slate200);background:white;color:var(--slate700);font-size:13px;font-weight:500;cursor:pointer;transition:all .12s}
+.stbtn:hover{border-color:var(--g400);background:var(--g50)}
+.stbtn.ok{background:var(--g50);color:var(--green);border-color:var(--green)}
 
 /* HISTORIAL TIENDA */
 .ht-banner{background:var(--g50);border:1px solid var(--g200);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:16px}
@@ -485,7 +488,7 @@ a{color:var(--green);text-decoration:none}
     <!-- DASHBOARD -->
     <div id="vInicio" class="view active">
       <div class="ph">
-        <div><div class="pt" id="dWelcome">—</div><div class="pslot" id="dFecha">—</div></div>
+        <div><div class="pt" id="dWelcome">—</div><div id="dFecha" style="font-size:13px;color:var(--slate500);margin-top:3px">—</div></div>
         <button class="btn btn-p" onclick="nav('nuevo')"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Nuevo reporte</button>
       </div>
       <div class="sg" id="dStats"></div>
@@ -661,7 +664,7 @@ a{color:var(--green);text-decoration:none}
     <!-- HISTORIAL -->
     <div id="vHistorial" class="view">
       <div class="ph">
-        <div><div class="pt">Historial de reportes</div><div class="pslot" id="hSub">—</div></div>
+        <div><div class="pt">Historial de reportes</div><div id="hSub" style="font-size:13px;color:var(--slate500);margin-top:3px">—</div></div>
         <button class="btn btn-s" onclick="exportCSV()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>CSV</button>
       </div>
       <div class="fbar">
@@ -684,7 +687,7 @@ a{color:var(--green);text-decoration:none}
     <!-- PROVEEDORES -->
     <div id="vProveedores" class="view">
       <div class="ph">
-        <div><div class="pt">Proveedores</div><div class="pslot">Empresas instaladoras con acceso a la plataforma</div></div>
+        <div><div class="pt">Proveedores</div><div style="font-size:13px;color:var(--slate500);margin-top:3px">Empresas instaladoras con acceso a la plataforma</div></div>
         <button class="btn btn-p" onclick="openMo('moProv')"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Agregar proveedor</button>
       </div>
       <div class="ug" id="provGrid"></div>
@@ -692,7 +695,7 @@ a{color:var(--green);text-decoration:none}
 
     <!-- INTELIGENCIA -->
     <div id="vInteligencia" class="view">
-      <div class="ph"><div><div class="pt">Inteligencia de negocio</div><div class="pslot">Análisis en tiempo real de fallas, proveedores y tiendas</div></div></div>
+      <div class="ph"><div><div class="pt">Inteligencia de negocio</div><div style="font-size:13px;color:var(--slate500);margin-top:3px">Análisis en tiempo real de fallas, proveedores y tiendas</div></div></div>
       <div class="sg" id="intStats">
         <div class="stat"><div class="sv">—</div><div class="sl">Total reportes</div></div>
         <div class="stat"><div class="sv">—</div><div class="sl">Correctivos</div></div>
@@ -712,7 +715,7 @@ a{color:var(--green);text-decoration:none}
 
     <!-- PERFIL PROVEEDOR -->
     <div id="vPerfil" class="view">
-      <div class="ph"><div><div class="pt">Mi perfil</div><div class="pslot">Información de tu empresa en la plataforma</div></div></div>
+      <div class="ph"><div><div class="pt">Mi perfil</div><div style="font-size:13px;color:var(--slate500);margin-top:3px">Información de tu empresa en la plataforma</div></div></div>
       <div class="pb" id="pbBanner">
         <div class="pb-logo" id="pbLogo">
           <input type="file" accept="image/*" onchange="upLogo(this)">
@@ -732,7 +735,7 @@ a{color:var(--green);text-decoration:none}
     <!-- ─── COBRANZA ─── -->
     <div id="vCobranza" class="view">
       <div class="ph">
-        <div><div class="pt">Cobranza Coppel</div><div class="pslot">Control de pagos por reporte — desde la visita hasta el cobro</div></div>
+        <div><div class="pt">Cobranza Coppel</div><div style="font-size:13px;color:var(--slate500);margin-top:3px">Control de pagos por reporte — desde la visita hasta el cobro</div></div>
         <button class="btn btn-p admin-only" style="display:none" onclick="exportCobCSV()">
           <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           Exportar CSV
@@ -887,12 +890,13 @@ const TIPOS=[
 
 const SECS=[
   {id:'sembrado',icon:'☀️',name:'Sembrado fotovoltaico',desc:'Inspección visual de módulos y estructura'},
-  {id:'inversores',icon:'⚡',name:'Inversores y gabinete DC',desc:'Estado de inversores, fusibles y SPD'},
-  {id:'tablero',icon:'🔌',name:'Tablero AC / breakers',desc:'Estado del tablero eléctrico'},
+  {id:'estructura_tipo',icon:'🏗️',name:'Estructura de montaje',desc:'Materiales, soportes y estado de la estructura'},
+  {id:'canalizaciones',icon:'🔧',name:'Canalización y cableado',desc:'Hallazgos en tuberías, conduit y cableado'},
+  {id:'proteccion_dc',icon:'⚡',name:'Protecciones en DC',desc:'Supresores, fusibles, fusibles lineales, gabinete DC'},
+  {id:'proteccion_ac',icon:'🔌',name:'Protecciones en AC',desc:'Gabinete AC y tablero principal'},
+  {id:'inversores',icon:'🔆',name:'Inversores',desc:'Estado y mediciones por inversor'},
   {id:'termografia',icon:'🌡️',name:'Inspección termográfica',desc:'Fotos con cámara termográfica'},
   {id:'antes_despues',icon:'📸',name:'Antes y después',desc:'Evidencia fotográfica de trabajos realizados'},
-  {id:'estructura_tipo',icon:'🏗️',name:'Tipo de estructura',desc:'Material y estado de montaje'},
-  {id:'canalizaciones',icon:'🔧',name:'Canalizaciones y cableado',desc:'Fotos de canalización y estado'},
   {id:'monitoreo',icon:'💻',name:'Monitoreo en plataforma',desc:'Capturas y datos de generación'},
 ];
 
@@ -981,7 +985,7 @@ function renderDash(){
 
 // ═══════ FORM INIT ═══════
 function initForm(){
-  fStep=0;photos={};stData={};encDec=null;reqCorr=null;tipoSel=null;secsActivas=new Set();
+  fStep=0;photos={};stData={};encDec=null;reqCorr=null;tipoSel=null;secsActivas=new Set();matsSeleccionados=new Set();
   document.querySelectorAll('.fstep').forEach((s,i)=>s.classList.toggle('active',i===0));
   const fEstado=document.getElementById('f_estado');
   if(fEstado){fEstado.value='';updateCiudades();}
@@ -1027,11 +1031,11 @@ function selTipo(id,btn){
   document.getElementById('alcBox').style.display='block';
   // Auto-select secciones por tipo
   const defaults={
-    prev:['sembrado','estructura_tipo','inversores','tablero','canalizaciones','monitoreo'],
-    corr:['sembrado','estructura_tipo','inversores','tablero','canalizaciones','antes_despues'],
-    mon:['monitoreo','inversores'],
-    rein:['sembrado','estructura_tipo','inversores','tablero','canalizaciones','antes_despues'],
-    int:['sembrado','estructura_tipo','inversores','tablero','termografia','canalizaciones','antes_despues','monitoreo'],
+    prev:['sembrado','estructura_tipo','canalizaciones','proteccion_dc','proteccion_ac','inversores','monitoreo'],
+    corr:['sembrado','estructura_tipo','canalizaciones','proteccion_dc','proteccion_ac','inversores','antes_despues'],
+    mon:['monitoreo','inversores','proteccion_dc'],
+    rein:['sembrado','estructura_tipo','canalizaciones','proteccion_dc','proteccion_ac','inversores','antes_despues'],
+    int:['sembrado','estructura_tipo','canalizaciones','proteccion_dc','proteccion_ac','inversores','termografia','antes_despues','monitoreo'],
   };
   secsActivas=new Set(defaults[id]||[]);
   SECS.forEach(s=>{
@@ -1060,6 +1064,19 @@ function toggleSec(id,tog){
 }
 
 function fNext(){
+  // Validation per step
+  if(fStep===0&&!tipoSel){showToast('Selecciona el tipo de trabajo','error');return}
+  if(fStep===1){
+    if(!gv('f_num_tienda')&&!gv('f_cliente')){showToast('Ingresa número de tienda o nombre del cliente','error');return}
+    if(!gv('f_estado')){showToast('Selecciona el estado','error');return}
+    if(!gv('f_folio')){showToast('Ingresa el folio del reporte','error');return}
+    if(!gv('f_fecha')){showToast('Selecciona la fecha de visita','error');return}
+  }
+  if(fStep===3){
+    if(!encDec){showToast('Selecciona la decisión de encendido del sistema','error');return}
+    if((encDec==='no'||encDec==='cond')&&!gv('f_enc_r')){showToast('Describe las razones de la decisión de encendido','error');return}
+    if(reqCorr===null){showToast('Indica si se requiere servicio correctivo','error');return}
+  }
   document.getElementById('fs'+fStep).classList.remove('active');
   fStep++;
   if(fStep===2)buildSecContent();
@@ -1082,6 +1099,23 @@ function selMat(val,btn){
   document.getElementById('f_mat_seleccionado').value=val;
   const otroBox=document.getElementById('mat_otro_box');
   if(otroBox)otroBox.style.display=val==='Otro'?'block':'none';
+}
+
+// Multi-select version for nueva estructura_tipo
+let matsSeleccionados=new Set();
+function matId(m){return m.replace(/\s/g,'_').replace(/[áàâãä]/g,'a').replace(/[éèêë]/g,'e').replace(/[íìîï]/g,'i').replace(/[óòôõö]/g,'o').replace(/[úùûü]/g,'u').replace(/[ñ]/g,'n');}
+function toggleMat(val,btn){
+  if(matsSeleccionados.has(val)){
+    matsSeleccionados.delete(val);
+    btn.className='stbtn';
+  } else {
+    matsSeleccionados.add(val);
+    btn.className='stbtn ok';
+  }
+  const otroBox=document.getElementById('mat_otro_box');
+  if(otroBox)otroBox.style.display=matsSeleccionados.has('Otro')?'block':'none';
+  // Also sync the hidden field for PDF
+  document.getElementById('f_mat_seleccionado').value=[...matsSeleccionados].join(', ');
 }
 
 function buildSecContent(){
@@ -1169,41 +1203,125 @@ function getSecHTML(id,name,icon){
     </div>`);
 
   if(id==='estructura_tipo') return secWrap(`
-    <div class="sdiv">Material de la estructura de montaje</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px" id="mat_wrap">
-      ${['Losa de concreto','Lamina engargolada','Lamina KR18','Lamina trapezoidal','Techo verde','Otro'].map(m=>`
-        <button class="stbtn" onclick="selMat('${m}',this)" id="mat_${m.replace(/\s/g,'_')}">${m}</button>`).join('')}
+    <div style="background:var(--blue-lt);border:1px solid #bfdbfe;border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:13px;color:#1d4ed8">
+      🏗️ Registra el material de montaje y el estado de la estructura. Puedes seleccionar <strong>más de un material</strong> si los paneles están sobre distintas superficies.
+    </div>
+
+    <div class="sdiv">Material(es) de montaje — selecciona todos los que apliquen</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px" id="mat_wrap">
+      ${['Losa de concreto','Lámina acanalada','Lámina KR18','Lámina trapezoidal','Techo verde','Perfil metálico','Otro'].map(m=>`
+        <button class="stbtn" onclick="toggleMat('${m}',this)" id="mat_${matId(m)}">${m}</button>`).join('')}
     </div>
     <div class="fg c1" style="margin-bottom:14px" id="mat_otro_box" style="display:none">
-      <div class="ff"><label>Especifica el tipo de material</label><input type="text" id="f_mat_otro" placeholder="Describe el tipo de material..."></div>
+      <div class="ff"><label>Especifica el otro material</label><input type="text" id="f_mat_otro" placeholder="Describe el tipo de material..."></div>
+    </div>
+
+    <div class="sdiv">Descripción y hallazgos de la estructura</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Estado general de la estructura <span class="req">*</span></label>
+        <textarea id="f_est_desc" rows="3" placeholder="Describe el estado general: presencia de óxido, deformaciones, soldaduras en mal estado, recubrimiento, holguras, tornillería floja..."></textarea>
+      </div>
+    </div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Hallazgos en soportes y anclajes</label>
+        <textarea id="f_est_soportes" rows="3" placeholder="Estado de los soportes: postes, perfiles, ángulos, rieles... ¿Hay alguno doblado, roto, desprendido o sin fijación correcta?"></textarea>
+      </div>
+    </div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Condición del techo / superficie de montaje</label>
+        <textarea id="f_est_techo" rows="2" placeholder="¿Hay grietas en losa, lámina ondulada, corrosión, filtraciones cerca de los puntos de anclaje?"></textarea>
+      </div>
     </div>
     <div class="fg c1" style="margin-bottom:14px">
-      <div class="ff"><label>Estado general de la estructura</label><textarea id="f_est_desc" rows="3" placeholder="Estado de la estructura, oxido, deformaciones, soldaduras, estado del recubrimiento..."></textarea></div>
+      <div class="ff">
+        <label>Recomendaciones para la estructura</label>
+        <textarea id="f_est_rec" rows="2" placeholder="Acciones correctivas sugeridas, prioridad, plazo estimado..."></textarea>
+      </div>
     </div>
-    <div class="sdiv">Fotografias de la estructura (3 fotos)</div>
-    <div class="pg pg3">
-      ${psHTML('est1','Estructura — vista 1')}${psHTML('est2','Estructura — vista 2')}${psHTML('est3','Estructura — detalle')}
+
+    <div class="sdiv">Estado de la estructura</div>
+    ${stRow('Integridad estructural (marco / perfiles)','st_est_int','✓ Sin daños','⚠ Revisar','✗ Daño crítico')}
+    ${stRow('Tornillería y anclajes','st_est_torn','✓ Apretado','⚠ Holgura','✗ Faltante/roto')}
+    ${stRow('Anticorrosión / recubrimiento','st_est_corr','✓ Bueno','⚠ Deteriorado','✗ Sin recubrimiento')}
+    ${stRow('Soportes / postes','st_est_sop','✓ Firmes','⚠ Verificar','✗ Comprometidos')}
+
+    <div class="sdiv">Fotografías de la estructura (hasta 5)</div>
+    <div class="pg pg3" style="margin-bottom:8px">
+      ${psHTML('est1','Vista general estructura')}${psHTML('est2','Detalle anclajes / soportes')}${psHTML('est3','Tornillería / perfil')}
+    </div>
+    <div class="pg pg2">
+      ${psHTML('est4','Superficie de montaje (techo)')}${psHTML('est5','Hallazgo relevante')}
     </div>`);
 
   if(id==='canalizaciones') return secWrap(`
-    <div class="fg c1" style="margin-bottom:14px">
-      <div class="ff"><label>Estado de canalizaciones y cableado</label><textarea id="f_can_desc" rows="3" placeholder="Describe el estado de las canalizaciones: tuberia IMC, conduit, cable suelto, amarres, sujeciones, humedad..."></textarea></div>
+    <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:13px;color:#92400e">
+      🔧 Documenta <strong>todos los hallazgos</strong> encontrados en tuberías, conduit, cableado y sujeciones. Sube tantas fotos como sean necesarias para evidenciar el estado real.
     </div>
-    <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:var(--r);padding:10px 14px;margin-bottom:14px;font-size:13px;color:#92400e">
-      ⚡ Sube fotos de canalizaciones en mal estado: cables sueltos, tuberias mal colocadas, daños en recubrimiento, humedades, etc.
-    </div>
-    <div class="sdiv">Fotografias de canalizaciones (hasta 5)</div>
-    <div class="pg pg3">
-      ${psHTML('can1','Canalizacion 1')}${psHTML('can2','Canalizacion 2')}${psHTML('can3','Canalizacion 3')}
-      ${psHTML('can4','Canalizacion 4')}${psHTML('can5','Canalizacion 5')}
-    </div>
-    <div class="sdiv">Estado</div>
-    ${stRow('Canalizaciones DC (tuberias/conduit)','st_can_dc','OK','Observacion','Falla')}
-    ${stRow('Cableado DC expuesto','st_cab_dc','OK','Requiere sujecion','Cable danado')}
-    ${stRow('Canalizaciones AC','st_can_ac','OK','Observacion','Falla')}
-    ${stRow('Puesta a tierra (cableado)','st_tierra_cab','OK','Verificar','Falla')}`);
 
+    <div class="sdiv">Canalización DC (desde módulos hasta inversores)</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Descripción del estado de canalización DC</label>
+        <textarea id="f_can_dc_desc" rows="3" placeholder="Describe el recorrido y estado del conduit / tubería IMC en el lado DC: ¿hay tramos sin soporte, dobleces bruscos, golpes, exposición a humedad, faltantes de conector?"></textarea>
+      </div>
+    </div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Hallazgos en cableado DC (cable suelto / dañado)</label>
+        <textarea id="f_can_dc_cable" rows="3" placeholder="¿Hay cable DC expuesto sin protección, pelado, aplastado, sin grapa de sujeción, con radio de curvatura incorrecto, arañado por metales...?"></textarea>
+      </div>
+    </div>
+    ${stRow('Tubería / conduit DC','st_can_dc','✓ Correcto','⚠ Observación','✗ Falla')}
+    ${stRow('Cableado DC (exposición / daño)','st_cab_dc','✓ Protegido','⚠ Requiere sujeción','✗ Cable dañado')}
 
+    <div class="sdiv">Canalización AC (desde inversores hasta tablero)</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Descripción del estado de canalización AC</label>
+        <textarea id="f_can_ac_desc" rows="3" placeholder="Estado del conduit, caja de paso, conectores, registros... ¿hay tuberías mal colocadas, sin soporte, con humedad acumulada, tramos abiertos?"></textarea>
+      </div>
+    </div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Hallazgos en cableado AC</label>
+        <textarea id="f_can_ac_cable" rows="2" placeholder="¿Cable suelto, sin marquilla, identificación incorrecta, calibre inadecuado, empalmes sin protección...?"></textarea>
+      </div>
+    </div>
+    ${stRow('Tubería / conduit AC','st_can_ac','✓ Correcto','⚠ Observación','✗ Falla')}
+
+    <div class="sdiv">Puesta a tierra y filtraciones</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Estado del cableado de tierra y detección de filtraciones</label>
+        <textarea id="f_can_tierra" rows="3" placeholder="¿El cable de tierra está correctamente identificado y conectado? ¿Hay signos de filtración de agua en cajas de registro, canaletas o tableros? Describe la ubicación exacta."></textarea>
+      </div>
+    </div>
+    ${stRow('Puesta a tierra (cableado)','st_tierra_cab','✓ Correcto','⚠ Verificar','✗ Falla')}
+    ${stRow('Filtraciones / humedad en ductos','st_filtr','✓ Sin filtraciones','⚠ Señales leves','✗ Filtración activa')}
+
+    <div class="sdiv">Fotografías de hallazgos en canalización (hasta 8)</div>
+    <div style="background:var(--slate50);border:1px solid var(--slate200);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--slate600)">
+      📷 Sube fotos de cada hallazgo importante: cable suelto, tubería mal colocada, filtración, empalme sin protección, etc. Cada foto quedará en el reporte PDF.
+    </div>
+    <div class="pg pg4" style="margin-bottom:8px">
+      ${psHTML('can1','Hallazgo 1')}${psHTML('can2','Hallazgo 2')}${psHTML('can3','Hallazgo 3')}${psHTML('can4','Hallazgo 4')}
+    </div>
+    <div class="pg pg4">
+      ${psHTML('can5','Hallazgo 5')}${psHTML('can6','Hallazgo 6')}${psHTML('can7','Hallazgo 7')}${psHTML('can8','Hallazgo 8')}
+    </div>
+
+    <div class="sdiv">Recomendaciones de canalización</div>
+    <div class="fg c1">
+      <div class="ff">
+        <label>Acciones correctivas recomendadas</label>
+        <textarea id="f_can_rec" rows="3" placeholder="Lista los trabajos necesarios para corregir los hallazgos encontrados: recolocación de tubería, sustitución de cable, sellado de filtraciones..."></textarea>
+      </div>
+    </div>`);
+
+  if(id==='monitoreo') return secWrap(`
     <div class="fg">
       <div class="ff"><label>Plataforma de monitoreo</label><input type="text" id="f_plat" placeholder="Fronius Solar.web / SolarEdge / Huawei FusionSolar"></div>
       <div class="ff"><label>kWh generados este mes</label><input type="number" id="f_kwh_mes2" step="0.1" placeholder="1040.5"></div>
@@ -1211,6 +1329,141 @@ function getSecHTML(id,name,icon){
     <div class="fg c1" style="margin-bottom:14px"><div class="ff"><label>Estado en plataforma</label><textarea id="f_plat_obs" rows="3" placeholder="Alertas activas, rendimiento vs esperado, conexión del inversor..."></textarea></div></div>
     <div class="pg pg2">
       ${psHTML('m1','Screenshot plataforma')}${psHTML('m2','Inversor en línea')}
+    </div>`);
+
+  if(id==='proteccion_dc') return secWrap(`
+    <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:13px;color:#92400e">
+      ⚡ Registra el estado de <strong>todas las protecciones en el lado DC</strong>: supresores, fusibles, fusibles lineales (string) y el gabinete DC.
+    </div>
+
+    <div class="sdiv">Supresores de sobretensión (SPD)</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Estado de supresores SPD</label>
+        <textarea id="f_spd_obs" rows="3" placeholder="¿Hay indicadores rojos? ¿Cuántos supresores tienen? ¿Están correctamente conectados? Indica marca y modelo si es posible..."></textarea>
+      </div>
+    </div>
+    ${stRow('Supresores SPD','st_spd','✓ Verde (OK)','','✗ Rojo — sustituir',true,true)}
+
+    <div class="sdiv">Fusibles de string (fusibles lineales)</div>
+    <div class="fg">
+      <div class="ff">
+        <label>Cantidad de fusibles de string</label>
+        <input type="number" id="f_fus_qty" placeholder="Ej: 6" min="0">
+      </div>
+      <div class="ff">
+        <label>Calibre / amperaje (A)</label>
+        <input type="text" id="f_fus_cal" placeholder="Ej: 15A — gPV">
+      </div>
+    </div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Hallazgos en fusibles de string</label>
+        <textarea id="f_fus_obs" rows="3" placeholder="¿Algún fusible fundido, con continuidad incorrecta, portafusibles dañado, oxidado? Indica posición del string afectado..."></textarea>
+      </div>
+    </div>
+    ${stRow('Fusibles de string (lineales)','st_fus_str','✓ Todos OK','⚠ Revisar','✗ Fundido(s)')}
+
+    <div class="sdiv">Fusibles en gabinete DC</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Estado de fusibles en gabinete DC</label>
+        <textarea id="f_fus_gab_obs" rows="3" placeholder="¿Cuántos fusibles hay en el gabinete? ¿Estado de portafusibles, fusibles fundidos, continuidad, temperatura anormal en pruebas?"></textarea>
+      </div>
+    </div>
+    ${stRow('Fusibles gabinete DC','st_fus','✓ OK','⚠ Verificar','✗ Fundido')}
+
+    <div class="sdiv">Gabinete DC — estado físico</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Estado del gabinete DC</label>
+        <textarea id="f_gab_dc_obs" rows="3" placeholder="¿Hay humedad, oxidación, cables sin sujeción, bornes flojos, borneras dañadas, prensaestopas incompletos, puerta sin cierre?"></textarea>
+      </div>
+    </div>
+    ${stRow('Gabinete DC (carcasa / IP)','st_gab_dc','✓ Sellado / limpio','⚠ Observación','✗ Humedad / daño')}
+    ${stRow('Bornes y conexiones DC','st_born_dc','✓ Apretados','⚠ Verificar','✗ Flojo / quemado')}
+
+    <div class="sdiv">Fotografías — Protecciones DC (hasta 6)</div>
+    <div class="pg pg3" style="margin-bottom:8px">
+      ${psHTML('pdc1','SPD — vista general')}${psHTML('pdc2','Fusibles de string')}${psHTML('pdc3','Gabinete DC — frontal')}
+    </div>
+    <div class="pg pg3">
+      ${psHTML('pdc4','Interior gabinete DC')}${psHTML('pdc5','Detalle fusible / borne')}${psHTML('pdc6','Hallazgo relevante DC')}
+    </div>
+
+    <div class="sdiv">Observaciones generales DC</div>
+    <div class="fg c1">
+      <div class="ff">
+        <label>Notas adicionales y recomendaciones DC</label>
+        <textarea id="f_pdc_rec" rows="3" placeholder="Cualquier hallazgo que no esté en las secciones anteriores, materiales a sustituir, revisiones pendientes..."></textarea>
+      </div>
+    </div>`);
+
+  if(id==='proteccion_ac') return secWrap(`
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:13px;color:#1d4ed8">
+      🔌 Registra el estado de las <strong>protecciones en el lado AC</strong>: gabinete de protecciones AC, interruptores termomagnéticos, diferencial y tablero principal.
+    </div>
+
+    <div class="sdiv">Gabinete de protecciones AC</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Estado del gabinete AC</label>
+        <textarea id="f_gab_ac_obs" rows="3" placeholder="¿Humedad, oxidación, cables sin identificar, prensaestopas abiertos, puerta sin cierre, temperatura elevada? Describe el estado real..."></textarea>
+      </div>
+    </div>
+    ${stRow('Gabinete AC (carcasa / IP)','st_gab_ac','✓ Sellado / limpio','⚠ Observación','✗ Humedad / daño')}
+    ${stRow('Bornes y conexiones AC','st_born_ac','✓ Apretados','⚠ Verificar','✗ Flojo / quemado')}
+
+    <div class="sdiv">Interruptores y protecciones</div>
+    <div class="fg">
+      <div class="ff">
+        <label>Interruptor principal FV (amperaje)</label>
+        <input type="text" id="f_ac_int_fv" placeholder="Ej: 63A — 2P">
+      </div>
+      <div class="ff">
+        <label>Interruptor diferencial (si aplica)</label>
+        <input type="text" id="f_ac_dif" placeholder="Ej: 40A — 30mA tipo A">
+      </div>
+    </div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Hallazgos en interruptores y protecciones AC</label>
+        <textarea id="f_ac_int_obs" rows="3" placeholder="¿Algún interruptor disparado, con señales de calentamiento, palanca floja, conexión a tierra incorrecta, capacidad inadecuada para la instalación?"></textarea>
+      </div>
+    </div>
+    ${stRow('Interruptor FV principal (AC)','st_ifv','✓ Cerrado / OK','⚠ Revisar','✗ Disparo / falla')}
+    ${stRow('Diferencial (si aplica)','st_dif','✓ OK','⚠ Verificar','✗ Falla',true)}
+
+    <div class="sdiv">Tablero principal (instalación existente)</div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Estado del tablero principal</label>
+        <textarea id="f_tab_obs" rows="3" placeholder="¿Hay breakers calientes, cables sin identificar, espacio de trabajo inadecuado, tierra mal conectada, señales de arco o quemaduras en el tablero general del inmueble?"></textarea>
+      </div>
+    </div>
+    <div class="fg c1" style="margin-bottom:10px">
+      <div class="ff">
+        <label>Punto de interconexión FV en el tablero</label>
+        <textarea id="f_tab_inter" rows="2" placeholder="Describe cómo y dónde se conecta el sistema FV al tablero: barra de neutro, circuito dedicado, interruptor de respaldo..."></textarea>
+      </div>
+    </div>
+    ${stRow('Tablero AC / breakers general','st_ac','✓ Normal','⚠ Revisar','✗ Falla')}
+    ${stRow('Identificación de circuitos','st_id_circ','✓ Identificados','⚠ Parcial','✗ Sin identificar')}
+
+    <div class="sdiv">Fotografías — Protecciones AC (hasta 6)</div>
+    <div class="pg pg3" style="margin-bottom:8px">
+      ${psHTML('pac1','Gabinete AC — frontal')}${psHTML('pac2','Interior gabinete AC')}${psHTML('pac3','Tablero principal')}
+    </div>
+    <div class="pg pg3">
+      ${psHTML('pac4','Interruptores / breakers')}${psHTML('pac5','Punto de interconexión FV')}${psHTML('pac6','Hallazgo relevante AC')}
+    </div>
+
+    <div class="sdiv">Observaciones generales AC</div>
+    <div class="fg c1">
+      <div class="ff">
+        <label>Notas adicionales y recomendaciones AC</label>
+        <textarea id="f_pac_rec" rows="3" placeholder="Trabajos pendientes, materiales a sustituir, ajustes de protecciones, coordinación con el electricista del cliente..."></textarea>
+      </div>
     </div>`);
 
   if(id==='seguridad') return secWrap(`
@@ -1359,13 +1612,43 @@ async function saveAndPDF(){
     kwp:gv('f_kwp'),paneles:gv('f_paneles'),ninv:gv('f_ninv'),anio:gv('f_anio'),
     mpanel:gv('f_mpanel'),modpanel:gv('f_modpanel'),minv:gv('f_minv'),modinv:gv('f_modinv'),
     secsActivas:[...secsActivas],
+    inversores:(()=>{
+      const n=parseInt(document.getElementById('f_ninv')?.value)||0;
+      const arr=[];
+      for(let i=1;i<=Math.min(n,6);i++){
+        arr.push({
+          modelo:document.getElementById('inv'+i+'_modelo')?.value||'',
+          pot_nom:document.getElementById('inv'+i+'_pot_nom')?.value||'',
+          pot_act:document.getElementById('inv'+i+'_pot_act')?.value||'',
+          vac:document.getElementById('inv'+i+'_vac')?.value||'',
+          iac:document.getElementById('inv'+i+'_iac')?.value||'',
+          temp:document.getElementById('inv'+i+'_temp')?.value||'',
+          nstr:document.getElementById('inv'+i+'_nstr')?.value||'',
+        });
+      }
+      return arr;
+    })(),
     // mediciones removidas - se capturan en datos del sistema
     // secciones
     sem_desc:gv('f_sem_desc'),sem_estructura:gv('f_sem_estructura'),
     inv_desc:gv('f_inv_desc'),
+    // Estructura
     mat_estructura:gv('f_mat_seleccionado')||gv('f_mat_otro'),
-    est_desc:gv('f_est_desc'),
-    can_desc:gv('f_can_desc'),
+    mat_seleccionados:[...matsSeleccionados].join(', '),
+    est_desc:gv('f_est_desc'),est_soportes:gv('f_est_soportes'),
+    est_techo:gv('f_est_techo'),est_rec:gv('f_est_rec'),
+    // Canalizaciones
+    can_dc_desc:gv('f_can_dc_desc'),can_dc_cable:gv('f_can_dc_cable'),
+    can_ac_desc:gv('f_can_ac_desc'),can_ac_cable:gv('f_can_ac_cable'),
+    can_tierra:gv('f_can_tierra'),can_rec:gv('f_can_rec'),
+    // Proteccion DC
+    spd_obs:gv('f_spd_obs'),fus_qty:gv('f_fus_qty'),fus_cal:gv('f_fus_cal'),
+    fus_obs:gv('f_fus_obs'),fus_gab_obs:gv('f_fus_gab_obs'),
+    gab_dc_obs:gv('f_gab_dc_obs'),pdc_rec:gv('f_pdc_rec'),
+    // Proteccion AC
+    gab_ac_obs:gv('f_gab_ac_obs'),ac_int_fv:gv('f_ac_int_fv'),ac_dif:gv('f_ac_dif'),
+    ac_int_obs:gv('f_ac_int_obs'),tab_obs:gv('f_tab_obs'),tab_inter:gv('f_tab_inter'),
+    pac_rec:gv('f_pac_rec'),
     termo_eq:gv('f_termo_eq'),termo_max:gv('f_termo_max'),termo_obs:gv('f_termo_obs'),
     plat:gv('f_plat'),kwh_mes2:gv('f_kwh_mes2'),plat_obs:gv('f_plat_obs'),
     trab1:gv('f_trab1'),trab2:gv('f_trab2'),trab3:gv('f_trab3'),
@@ -1524,48 +1807,165 @@ function generatePDF(r){
   // PAGE 3 — Estructura de montaje
   if(r.secsActivas?.includes('estructura_tipo')){
     doc.addPage();deco();y=logoHdr(MT)+4;
-    y=h2('2.- TIPO Y ESTADO DE LA ESTRUCTURA DE MONTAJE',y);y+=2;
-    if(r.mat_estructura){
-      doc.setFillColor('#f5f9e8');doc.roundedRect(ML,y,CW,10,2,2,'F');
-      doc.setDrawColor(GR);doc.setLineWidth(0.3);doc.roundedRect(ML,y,CW,10,2,2,'S');
-      doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(GR);
-      doc.text('Material: '+r.mat_estructura,ML+CW/2,y+6.5,{align:'center'});
-      y+=14;
-    }
-    y=body(r.est_desc,y,CW)+4;
-    const tw3=(CW-12)/3,th3=tw3*0.72;
-    const estPhotos=[['p_est1','Estructura vista 1'],['p_est2','Estructura vista 2'],['p_est3','Detalle estructura']];
-    const hasEst=estPhotos.some(([id2])=>r.photos?.[id2]);
-    if(hasEst){
-      estPhotos.forEach(([id2,cap],i)=>{
-        if(r.photos?.[id2]){addImg(r.photos[id2],ML+i*(tw3+6),y,tw3,th3);capt(cap,ML+i*(tw3+6),y+th3+2,tw3);}
-      });
+    y=h2('2.- ESTRUCTURA DE MONTAJE',y);y+=2;
+    // Material badge
+    const matLabel=r.mat_seleccionados||r.mat_estructura||'No especificado';
+    doc.setFillColor('#f5f9e8');doc.roundedRect(ML,y,CW,11,2,2,'F');
+    doc.setDrawColor(GR);doc.setLineWidth(0.3);doc.roundedRect(ML,y,CW,11,2,2,'S');
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(GR);
+    doc.text(sa('Material(es): '+matLabel),ML+CW/2,y+7,{align:'center'});y+=15;
+    // Descriptions
+    if(r.est_desc){y=h2('Estado general de la estructura:',y);y+=1;y=body(r.est_desc,y,CW)+4;}
+    if(r.est_soportes){y=h2('Hallazgos en soportes y anclajes:',y);y+=1;y=body(r.est_soportes,y,CW)+4;}
+    if(r.est_techo){y=h2('Condición del techo / superficie:',y);y+=1;y=body(r.est_techo,y,CW)+4;}
+    // Status table
+    y=semTable([
+      {label:'Integridad estructural (marco / perfiles)',val:r.stData?.st_est_int},
+      {label:'Tornillería y anclajes',val:r.stData?.st_est_torn},
+      {label:'Anticorrosión / recubrimiento',val:r.stData?.st_est_corr},
+      {label:'Soportes / postes',val:r.stData?.st_est_sop},
+    ],y);
+    // 5 photos in rows: 3 + 2
+    const tw3=(CW-12)/3,th3=tw3*0.68;
+    const estRow1=[['p_est1','Vista general'],['p_est2','Anclajes / soportes'],['p_est3','Tornillería / perfiles']];
+    const estRow2=[['p_est4','Superficie de montaje'],['p_est5','Hallazgo relevante']];
+    const hasEst1=estRow1.some(([id2])=>r.photos?.[id2]);
+    const hasEst2=estRow2.some(([id2])=>r.photos?.[id2]);
+    if(hasEst1){
+      estRow1.forEach(([id2,cap],i)=>{if(r.photos?.[id2]){addImg(r.photos[id2],ML+i*(tw3+6),y,tw3,th3);capt(cap,ML+i*(tw3+6),y+th3+2,tw3);}});
       y+=th3+9;
     }
+    if(hasEst2){
+      const tw2=(CW-6)/2,th2=tw2*0.65;
+      estRow2.forEach(([id2,cap],i)=>{if(r.photos?.[id2]){addImg(r.photos[id2],ML+i*(tw2+6),y,tw2,th2);capt(cap,ML+i*(tw2+6),y+th2+2,tw2);}});
+      y+=th2+9;
+    }
+    if(r.est_rec){y=h2('Recomendaciones:',y);y+=1;y=body(r.est_rec,y,CW)+4;}
   }
 
   // PAGE 3b — Canalizaciones
   if(r.secsActivas?.includes('canalizaciones')){
     doc.addPage();deco();y=logoHdr(MT)+4;
-    y=h2('3.- CANALIZACIONES Y CABLEADO',y);y+=2;
-    y=body(r.can_desc,y,CW)+4;
-    const canPhotos=[['p_can1','Canalizacion 1'],['p_can2','Canalizacion 2'],['p_can3','Canalizacion 3'],['p_can4','Canalizacion 4'],['p_can5','Canalizacion 5']];
+    y=h2('3.- CANALIZACION Y CABLEADO',y);y+=2;
+    // DC side
+    if(r.can_dc_desc||r.can_dc_cable){
+      y=h2('Canalizacion DC:',y);y+=1;
+      if(r.can_dc_desc){y=body(r.can_dc_desc,y,CW)+3;}
+      if(r.can_dc_cable){doc.setFont('helvetica','italic');doc.setFontSize(8.5);doc.setTextColor(GY);
+        const cl=doc.splitTextToSize(sa('Cableado: '+r.can_dc_cable),CW);doc.text(cl,ML,y);y+=cl.length*4.5+3;}
+    }
+    // AC side
+    if(r.can_ac_desc||r.can_ac_cable){
+      y=h2('Canalizacion AC:',y);y+=1;
+      if(r.can_ac_desc){y=body(r.can_ac_desc,y,CW)+3;}
+      if(r.can_ac_cable){doc.setFont('helvetica','italic');doc.setFontSize(8.5);doc.setTextColor(GY);
+        const cl=doc.splitTextToSize(sa('Cableado: '+r.can_ac_cable),CW);doc.text(cl,ML,y);y+=cl.length*4.5+3;}
+    }
+    // Tierra / filtraciones
+    if(r.can_tierra){y=h2('Tierra y filtraciones:',y);y+=1;y=body(r.can_tierra,y,CW)+3;}
+    // Status table
+    y=semTable([
+      {label:'Tuberia / conduit DC',val:r.stData?.st_can_dc},
+      {label:'Cableado DC (exposicion)',val:r.stData?.st_cab_dc},
+      {label:'Tuberia / conduit AC',val:r.stData?.st_can_ac},
+      {label:'Puesta a tierra (cableado)',val:r.stData?.st_tierra_cab},
+      {label:'Filtraciones / humedad en ductos',val:r.stData?.st_filtr},
+    ],y);
+    // Photos: up to 8 in rows of 4
+    const canPhotos=[['p_can1','Hallazgo 1'],['p_can2','Hallazgo 2'],['p_can3','Hallazgo 3'],['p_can4','Hallazgo 4'],
+                     ['p_can5','Hallazgo 5'],['p_can6','Hallazgo 6'],['p_can7','Hallazgo 7'],['p_can8','Hallazgo 8']];
     const hasCan=canPhotos.some(([id2])=>r.photos?.[id2]);
     if(hasCan){
-      for(let ci=0;ci<canPhotos.length;ci+=3){
-        const row=canPhotos.slice(ci,ci+3).filter(([id2])=>r.photos?.[id2]);
+      for(let ci=0;ci<canPhotos.length;ci+=4){
+        const row=canPhotos.slice(ci,ci+4).filter(([id2])=>r.photos?.[id2]);
         if(!row.length)continue;
-        const rw=(CW-(row.length-1)*6)/row.length, rh=rw*0.7;
+        const rw=(CW-(row.length-1)*5)/row.length,rh=rw*0.75;
+        row.forEach(([id2,cap],i)=>{addImg(r.photos[id2],ML+i*(rw+5),y,rw,rh);capt(cap,ML+i*(rw+5),y+rh+2,rw);});
+        y+=rh+9;
+      }
+    }
+    if(r.can_rec){y=h2('Recomendaciones:',y);y+=1;y=body(r.can_rec,y,CW)+4;}
+  }
+
+  // PAGE 3c — Protecciones DC
+  if(r.secsActivas?.includes('proteccion_dc')){
+    doc.addPage();deco();y=logoHdr(MT)+4;
+    y=h2('4.- PROTECCIONES EN DC',y);y+=2;
+    // SPD
+    if(r.spd_obs){y=h2('Supresores SPD:',y);y+=1;y=body(r.spd_obs,y,CW)+3;}
+    // Fusibles string
+    if(r.fus_obs||r.fus_qty){
+      y=h2('Fusibles de string (lineales):',y);y+=1;
+      if(r.fus_qty||r.fus_cal){
+        doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(GY);
+        doc.text(sa('Cantidad: '+(r.fus_qty||'—')+'   Calibre: '+(r.fus_cal||'—')),ML,y);y+=5;
+      }
+      if(r.fus_obs){y=body(r.fus_obs,y,CW)+3;}
+    }
+    // Fusibles gabinete
+    if(r.fus_gab_obs){y=h2('Fusibles en gabinete DC:',y);y+=1;y=body(r.fus_gab_obs,y,CW)+3;}
+    // Gabinete DC
+    if(r.gab_dc_obs){y=h2('Estado del gabinete DC:',y);y+=1;y=body(r.gab_dc_obs,y,CW)+3;}
+    y=semTable([
+      {label:'Supresores SPD',val:r.stData?.st_spd},
+      {label:'Fusibles de string',val:r.stData?.st_fus_str},
+      {label:'Fusibles gabinete DC',val:r.stData?.st_fus},
+      {label:'Gabinete DC (carcasa / IP)',val:r.stData?.st_gab_dc},
+      {label:'Bornes y conexiones DC',val:r.stData?.st_born_dc},
+    ],y);
+    // Photos 6
+    const pdcPhotos=[['p_pdc1','SPD'],['p_pdc2','Fusibles string'],['p_pdc3','Gabinete DC frontal'],
+                     ['p_pdc4','Interior gabinete'],['p_pdc5','Detalle fusible/borne'],['p_pdc6','Hallazgo DC']];
+    const hasPdc=pdcPhotos.some(([id2])=>r.photos?.[id2]);
+    if(hasPdc){
+      for(let pi=0;pi<pdcPhotos.length;pi+=3){
+        const row=pdcPhotos.slice(pi,pi+3).filter(([id2])=>r.photos?.[id2]);
+        if(!row.length)continue;
+        const rw=(CW-(row.length-1)*6)/row.length,rh=rw*0.7;
         row.forEach(([id2,cap],i)=>{addImg(r.photos[id2],ML+i*(rw+6),y,rw,rh);capt(cap,ML+i*(rw+6),y+rh+2,rw);});
         y+=rh+9;
       }
     }
+    if(r.pdc_rec){y=h2('Recomendaciones DC:',y);y+=1;y=body(r.pdc_rec,y,CW)+4;}
+  }
+
+  // PAGE 3d — Protecciones AC
+  if(r.secsActivas?.includes('proteccion_ac')){
+    doc.addPage();deco();y=logoHdr(MT)+4;
+    y=h2('5.- PROTECCIONES EN AC',y);y+=2;
+    if(r.gab_ac_obs){y=h2('Gabinete de protecciones AC:',y);y+=1;y=body(r.gab_ac_obs,y,CW)+3;}
+    if(r.ac_int_obs||r.ac_int_fv){
+      y=h2('Interruptores y protecciones:',y);y+=1;
+      if(r.ac_int_fv||r.ac_dif){
+        doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(GY);
+        doc.text(sa('Interruptor FV: '+(r.ac_int_fv||'—')+'   Diferencial: '+(r.ac_dif||'—')),ML,y);y+=5;
+      }
+      if(r.ac_int_obs){y=body(r.ac_int_obs,y,CW)+3;}
+    }
+    if(r.tab_obs){y=h2('Tablero principal:',y);y+=1;y=body(r.tab_obs,y,CW)+3;}
+    if(r.tab_inter){y=h2('Punto de interconexion FV:',y);y+=1;y=body(r.tab_inter,y,CW)+3;}
     y=semTable([
-      {label:'Canalizaciones DC',val:r.stData?.st_can_dc},
-      {label:'Cableado DC expuesto',val:r.stData?.st_cab_dc},
-      {label:'Canalizaciones AC',val:r.stData?.st_can_ac},
-      {label:'Puesta a tierra (cableado)',val:r.stData?.st_tierra_cab},
+      {label:'Gabinete AC (carcasa / IP)',val:r.stData?.st_gab_ac},
+      {label:'Bornes y conexiones AC',val:r.stData?.st_born_ac},
+      {label:'Interruptor FV principal (AC)',val:r.stData?.st_ifv},
+      {label:'Diferencial',val:r.stData?.st_dif},
+      {label:'Tablero AC / breakers general',val:r.stData?.st_ac},
+      {label:'Identificacion de circuitos',val:r.stData?.st_id_circ},
     ],y);
+    // Photos 6
+    const pacPhotos=[['p_pac1','Gabinete AC frontal'],['p_pac2','Interior gabinete AC'],['p_pac3','Tablero principal'],
+                     ['p_pac4','Interruptores'],['p_pac5','Interconexion FV'],['p_pac6','Hallazgo AC']];
+    const hasPac=pacPhotos.some(([id2])=>r.photos?.[id2]);
+    if(hasPac){
+      for(let pi=0;pi<pacPhotos.length;pi+=3){
+        const row=pacPhotos.slice(pi,pi+3).filter(([id2])=>r.photos?.[id2]);
+        if(!row.length)continue;
+        const rw=(CW-(row.length-1)*6)/row.length,rh=rw*0.7;
+        row.forEach(([id2,cap],i)=>{addImg(r.photos[id2],ML+i*(rw+6),y,rw,rh);capt(cap,ML+i*(rw+6),y+rh+2,rw);});
+        y+=rh+9;
+      }
+    }
+    if(r.pac_rec){y=h2('Recomendaciones AC:',y);y+=1;y=body(r.pac_rec,y,CW)+4;}
   }
 
   // PAGE 4 — Inversores
@@ -1594,6 +1994,26 @@ function generatePDF(r){
     {label:'Supresores SPD',val:r.stData?.st_spd},{label:'Conexión a tierra',val:r.stData?.st_tier},
     {label:'Tablero AC/breakers',val:r.stData?.st_ac},
   ],y);
+  // Inversor detail table
+  if(r.inversores?.length){
+    y+=4;
+    doc.setFillColor(GR);doc.rect(ML,y,CW,6,'F');
+    doc.setTextColor(WH);doc.setFont('helvetica','bold');doc.setFontSize(7.5);
+    const iCols=['Inversor','Modelo','kW nom.','kW act.','V AC','I AC','Temp°C'];
+    const iWs=[12,CW*0.35,18,18,18,18,18];let ix=ML;
+    iCols.forEach((c,ci)=>{doc.text(c,ix+iWs[ci]/2,y+4.2,{align:'center'});ix+=iWs[ci]});
+    y+=6;
+    r.inversores.forEach((inv,ii)=>{
+      const ibg=ii%2?'#f8fafc':WH;doc.setFillColor(ibg);doc.rect(ML,y,CW,7,'F');
+      doc.setDrawColor('#e2e8f0');doc.setLineWidth(0.2);doc.rect(ML,y,CW,7,'S');
+      doc.setTextColor(BK);doc.setFont('helvetica','normal');doc.setFontSize(7.5);
+      const iVals=['Inv '+(ii+1),inv.modelo||'-',inv.pot_nom||'-',inv.pot_act||'-',inv.vac||'-',inv.iac||'-',inv.temp||'-'];
+      let ix2=ML;
+      iVals.forEach((v,vi)=>{doc.text(sa(v.toString().substring(0,20)),ix2+iWs[vi]/2,y+4.7,{align:'center'});ix2+=iWs[vi]});
+      y+=7;
+    });
+    y+=4;
+  }
 
   // PAGE 5 — Termografía (si aplica)
   if(r.secsActivas?.includes('termografia')){
@@ -1608,7 +2028,7 @@ function generatePDF(r){
     for(let i=0;i<termoSlots.length;i+=3){
       const row=termoSlots.slice(i,i+3).filter(id=>r.photos?.[id]);
       if(row.length){
-        row.forEach((id,j)=>{addImg(r.photos[id],ML+j*(tw+4),y,tw,th);capt('Termografia '+tn++'',ML+j*(tw+4),y+th+2,tw)});
+        row.forEach((id,j)=>{addImg(r.photos[id],ML+j*(tw+4),y,tw,th);capt('Termografia '+(tn++),ML+j*(tw+4),y+th+2,tw)});
         y+=th+9;
       }
     }
@@ -1638,6 +2058,25 @@ function generatePDF(r){
         }
       }
     });
+  }
+
+  // PAGE 6b — Monitoreo (si aplica)
+  if(r.secsActivas?.includes('monitoreo')&&(r.plat||r.kwh_mes2||r.plat_obs||r.photos?.p_m1||r.photos?.p_m2)){
+    doc.addPage();deco();y=logoHdr(MT)+4;
+    y=h2('MONITOREO EN PLATAFORMA',y);y+=2;
+    if(r.plat||r.kwh_mes2){
+      const mrow=[];
+      if(r.plat)mrow.push(['Plataforma',r.plat]);
+      if(r.kwh_mes2)mrow.push(['kWh generados (mes)',r.kwh_mes2+' kWh']);
+      y=lectTable(mrow.length?mrow:[['Monitoreo','—']],y)+4;
+    }
+    if(r.plat_obs){y=body(r.plat_obs,y,CW)+4;}
+    if(r.photos?.p_m1||r.photos?.p_m2){
+      const mw=(CW-6)/2;
+      if(r.photos.p_m1){addImg(r.photos.p_m1,ML,y,mw,mw*0.68);capt('Screenshot plataforma',ML,y+mw*0.68+2,mw);}
+      if(r.photos.p_m2){addImg(r.photos.p_m2,ML+mw+6,y,mw,mw*0.68);capt('Inversor en línea',ML+mw+6,y+mw*0.68+2,mw);}
+      y+=mw*0.68+10;
+    }
   }
 
   // PAGE 7 — Conclusiones
