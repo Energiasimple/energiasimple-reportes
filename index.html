@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SolarReport MX — Plataforma de Reportes FV</title>
+<title>Energía Simple — Plataforma de Reportes FV</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --g50:#f0fdf4;--g100:#dcfce7;--g200:#bbf7d0;--g400:#4ade80;--g500:#22c55e;
-  --g600:#16a34a;--g700:#15803d;--g800:#166534;--g900:#14532d;
-  --green:#16a34a;--green-dk:#14532d;--green-lt:#f0fdf4;
+  --g50:#f5f9e8;--g100:#e8f3c4;--g200:#cde479;--g400:#aecf50;--g500:#9bc234;
+  --g600:#8eb436;--g700:#7a9c2e;--g800:#668426;--g900:#4d6418;
+  --green:#8eb436;--green-dk:#4d6418;--green-lt:#f5f9e8;
   --slate50:#f8fafc;--slate100:#f1f5f9;--slate200:#e2e8f0;--slate300:#cbd5e1;
-  --slate400:#94a3b8;--slate500:#64748b;--slate600:#475569;--slate700:#334155;
-  --slate800:#1e293b;--slate900:#0f172a;
+  --slate400:#868788;--slate500:#666666;--slate600:#555555;--slate700:#444444;
+  --slate800:#2a2a2a;--slate900:#1a1a1a;
   --white:#ffffff;--red:#ef4444;--red-lt:#fef2f2;
   --amber:#f59e0b;--amber-lt:#fffbeb;--blue:#3b82f6;--blue-lt:#eff6ff;
-  --font:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;
+  --font:'Montserrat','Poppins',system-ui,sans-serif;--mono:'DM Mono',monospace;
   --r:8px;--r-lg:14px;--r-xl:20px;
   --sh:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.06);
   --sh-md:0 4px 20px rgba(0,0,0,.08);
@@ -434,7 +434,7 @@ a{color:var(--green);text-decoration:none}
       <div class="login-mark-icon">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
       </div>
-      <div class="login-mark-text">SolarReport MX<span>Plataforma profesional FV</span></div>
+      <div class="login-mark-text">Energía Simple<span>Plataforma de reportes fotovoltaicos</span></div>
     </div>
     <div class="login-card">
       <h2>Iniciar sesión</h2>
@@ -458,12 +458,13 @@ a{color:var(--green);text-decoration:none}
   <div class="sidebar">
     <div class="sb-top">
       <div class="sb-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div>
-      <div><div class="sb-title">SolarReport MX</div><div class="sb-sub">Posventa solar</div></div>
+      <div><div class="sb-title">Energía Simple</div><div class="sb-sub">Reportes fotovoltaicos</div></div>
     </div>
     <nav class="sb-nav">
       <div class="nav-sec">Principal</div>
       <button class="ni active" onclick="nav('inicio')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
       <button class="ni" onclick="nav('nuevo')"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Nuevo reporte</button>
+      <button class="ni" onclick="nav('cobranza')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M7 15h2M12 15h3"/></svg>Cobranza <span class="nc" id="cobBadge" style="display:none">$</span></button>
       <button class="ni" onclick="nav('historial')"><svg viewBox="0 0 24 24"><path d="M9 12h6M9 16h4M6 2h12a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/></svg>Historial <span class="nc" id="nBadge" style="display:none">0</span></button>
       <div class="nav-sec admin-only" style="display:none">Administración</div>
       <button class="ni admin-only" style="display:none" onclick="nav('proveedores')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Proveedores</button>
@@ -496,20 +497,26 @@ a{color:var(--green);text-decoration:none}
 
     <!-- NUEVO REPORTE -->
     <div id="vNuevo" class="view">
-      <div class="ph"><div><div class="pt">Nuevo reporte</div><div class="ps">Selecciona el tipo de trabajo y define los alcances del servicio</div></div></div>
+      <div class="ph"><div><div class="pt">Nuevo reporte</div></div></div>
       <div class="fp" id="fProg"></div>
 
       <!-- STEP 0: Tipo + secciones -->
       <div class="fstep active" id="fs0">
         <div class="card">
-          <div class="ctitle">Tipo de trabajo</div>
-          <div class="tipo-wrap" id="tipoWrap"></div>
+          <div class="ctitle">Selecciona el tipo de trabajo</div>
+          <div class="tipo-wrap" id="tipoWrap">
+            <button class="tipo-card" onclick="selTipo('prev',this)"><span class="ti">🔧</span><div class="tn">Mantenimiento preventivo</div><div class="td">Revisión y limpieza programada</div></button>
+            <button class="tipo-card" onclick="selTipo('corr',this)"><span class="ti">⚡</span><div class="tn">Mantenimiento correctivo</div><div class="td">Reparación de fallas</div></button>
+            <button class="tipo-card" onclick="selTipo('mon',this)"><span class="ti">📊</span><div class="tn">Monitoreo</div><div class="td">Revisión de plataforma</div></button>
+            <button class="tipo-card" onclick="selTipo('rein',this)"><span class="ti">🔄</span><div class="tn">Reinstalación</div><div class="td">Reemplazo de equipos</div></button>
+            <button class="tipo-card" onclick="selTipo('int',this)"><span class="ti">⭐</span><div class="tn">Integral</div><div class="td">Servicio completo</div></button>
+          </div>
           <div id="alcBox" style="display:none">
             <div class="sdiv">Alcances del servicio</div>
             <div class="fg c1"><div class="ff"><label>Define los alcances de este servicio <span class="req">*</span></label><textarea id="f_alcances" rows="3" placeholder="Describe qué trabajo se realizará y hasta dónde llega el alcance. Esto protege a ambas partes en caso de disputas."></textarea></div></div>
             <div class="fg c1"><div class="ff"><label>Exclusiones (qué NO incluye)</label><textarea id="f_exclusiones" rows="2" placeholder="Ej: No incluye sustitución de inversores ni trabajos en tablero general..."></textarea></div></div>
             <div class="sdiv">Secciones incluidas automáticamente</div>
-            <div style="font-size:12px;color:var(--slate500);margin-bottom:10px">Estas secciones se incluirán en el reporte según el tipo de trabajo. Puedes ajustarlas.</div>
+            <div style="font-size:12px;color:var(--slate500);margin-bottom:10px">Estas secciones se incluirán según el tipo de trabajo. Puedes ajustarlas tocando cada chip.</div>
             <div id="secsWrap"></div>
           </div>
         </div>
@@ -525,16 +532,39 @@ a{color:var(--green);text-decoration:none}
             <div class="ff"><label>Nombre / sucursal</label><input type="text" id="f_cliente" placeholder="Canada Manuel Clouthier"></div>
           </div>
           <div class="fg">
-            <div class="ff"><label>Ciudad / Estado <span class="req">*</span></label><input type="text" id="f_ciudad" placeholder="Monterrey, N.L."></div>
+            <div class="ff"><label>Estado <span class="req">*</span></label>
+              <select id="f_estado" onchange="updateCiudades()">
+                <option value="">Selecciona estado...</option>
+                <option>Aguascalientes</option><option>Baja California</option><option>Baja California Sur</option>
+                <option>Campeche</option><option>Chiapas</option><option>Chihuahua</option>
+                <option>Ciudad de México</option><option>Coahuila</option><option>Colima</option>
+                <option>Durango</option><option>Estado de México</option><option>Guanajuato</option>
+                <option>Guerrero</option><option>Hidalgo</option><option>Jalisco</option>
+                <option>Michoacán</option><option>Morelos</option><option>Nayarit</option>
+                <option>Nuevo León</option><option>Oaxaca</option><option>Puebla</option>
+                <option>Querétaro</option><option>Quintana Roo</option><option>San Luis Potosí</option>
+                <option>Sinaloa</option><option>Sonora</option><option>Tabasco</option>
+                <option>Tamaulipas</option><option>Tlaxcala</option><option>Veracruz</option>
+                <option>Yucatán</option><option>Zacatecas</option>
+              </select>
+            </div>
+            <div class="ff"><label>Ciudad <span class="req">*</span></label>
+              <select id="f_ciudad">
+                <option value="">Primero selecciona estado</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg">
             <div class="ff"><label>Zona / Región</label><input type="text" id="f_zona" placeholder="Noreste"></div>
-          </div>
-          <div class="fg">
             <div class="ff"><label>Dirección del sitio</label><input type="text" id="f_dir" placeholder="Calle, colonia"></div>
-            <div class="ff"><label>N° contrato / expediente Coppel</label><input type="text" id="f_contrato" placeholder="CPPEL-2022-1493"></div>
           </div>
           <div class="fg">
+            <div class="ff"><label>N° contrato / expediente Coppel</label><input type="text" id="f_contrato" placeholder="CPPEL-2022-1493"></div>
             <div class="ff"><label>Contacto en tienda</label><input type="text" id="f_contacto" placeholder="Nombre y cargo"></div>
+          </div>
+          <div class="fg">
             <div class="ff"><label>Teléfono contacto</label><input type="text" id="f_tel_contacto" placeholder="81-XXXX-XXXX"></div>
+            <div class="ff"></div>
           </div>
         </div>
         <div class="card">
@@ -561,7 +591,7 @@ a{color:var(--green);text-decoration:none}
             <div class="ff"><label>Modelo paneles</label><input type="text" id="f_modpanel" placeholder="CS3W-455MS"></div>
           </div>
           <div class="sdiv">Detalle por inversor</div>
-          <div style="font-size:12px;color:var(--slate500);margin-bottom:10px">Ingresa el número de inversores arriba para ver los campos por inversor</div>
+          <div style="font-size:12px;color:var(--slate500);margin-bottom:10px">Ingresa el número de inversores arriba para ver los campos</div>
           <div id="invFieldsWrap"></div>
         </div>
         <div class="fnav"><button class="btn btn-s" onclick="fBack()">← Atrás</button><button class="btn btn-p" onclick="fNext()">Continuar →</button></div>
@@ -573,34 +603,8 @@ a{color:var(--green);text-decoration:none}
         <div class="fnav"><button class="btn btn-s" onclick="fBack()">← Atrás</button><button class="btn btn-p" onclick="fNext()">Continuar →</button></div>
       </div>
 
-      <!-- STEP 3: Mediciones eléctricas -->
+      <!-- STEP 3: Encendido + Correctivo + Observaciones -->
       <div class="fstep" id="fs3">
-        <div class="card">
-          <div class="ctitle">Mediciones eléctricas con multímetro</div>
-          <div style="background:var(--blue-lt);border:1px solid #bfdbfe;border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:13px;color:#1d4ed8">
-            📐 Los campos de cada inversor y sus strings se generan automáticamente según los datos que ingresaste en el paso anterior.
-          </div>
-          <div id="medInvWrap">
-            <div style="text-align:center;padding:24px;color:var(--slate400);font-size:13px">
-              Regresa al paso de datos generales e ingresa el número de inversores para ver los campos de medición.
-            </div>
-          </div>
-          <div class="sdiv">Mediciones generales del sistema</div>
-          <div class="med-grid">
-            <div class="med-item"><label>kWh hoy<span class="unit">kWh</span></label><input type="number" id="m_kwh_hoy" placeholder="38.4" step="0.1"></div>
-            <div class="med-item"><label>kWh este mes<span class="unit">kWh</span></label><input type="number" id="m_kwh_mes" placeholder="1040" step="0.1"></div>
-            <div class="med-item"><label>Resistencia tierra<span class="unit">Ω</span></label><input type="number" id="m_tierra" placeholder="—" step="0.1"></div>
-            <div class="med-item"><label>Aislamiento DC<span class="unit">MΩ</span></label><input type="number" id="m_aislam" placeholder="—" step="0.1"></div>
-          </div>
-          <div class="fg c1" style="margin-top:12px">
-            <div class="ff"><label>Observaciones sobre las mediciones</label><textarea id="m_obs" rows="3" placeholder="Notas relevantes, desviaciones respecto a valores nominales, lecturas anómalas..."></textarea></div>
-          </div>
-        </div>
-        <div class="fnav"><button class="btn btn-s" onclick="fBack()">← Atrás</button><button class="btn btn-p" onclick="fNext()">Continuar →</button></div>
-      </div>
-
-      <!-- STEP 4: Encendido + Correctivo + Observaciones -->
-      <div class="fstep" id="fs4">
         <div class="card">
           <div class="ctitle">Decisión de encendido del sistema</div>
           <div style="font-size:13px;font-weight:500;color:var(--slate700);margin-bottom:12px">¿Es prudente dejar el sistema encendido al finalizar la visita? <span class="req">*</span></div>
@@ -642,7 +646,8 @@ a{color:var(--green);text-decoration:none}
       </div>
 
       <!-- STEP 5: Resumen -->
-      <div class="fstep" id="fs5">
+      <!-- STEP 4: Resumen -->
+      <div class="fstep" id="fs4">
         <div class="card"><div class="ctitle">Resumen del reporte</div><div class="srl" id="sumList"></div></div>
         <div class="card"><div class="ctitle">Semáforo del sistema</div><div class="sem" id="sumSem"></div></div>
         <div class="fnav">
@@ -689,14 +694,14 @@ a{color:var(--green);text-decoration:none}
       <div class="ph"><div><div class="pt">Inteligencia de negocio</div><div class="ps">Análisis en tiempo real de fallas, proveedores y tiendas</div></div></div>
       <div class="sg" id="intStats"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-        <div class="card"><div class="ctitle">Tiendas con más fallas</div><div id="intTF"></div></div>
-        <div class="card"><div class="ctitle">Tipo de fallas más frecuentes</div><div id="intFF"></div></div>
+        <div class="card"><div class="ctitle">Tiendas con más fallas</div><div id="intTF"><div style="padding:24px;text-align:center;color:var(--slate400);font-size:13px;line-height:1.6">Genera reportes para ver las tiendas con más incidencias</div></div></div>
+        <div class="card"><div class="ctitle">Tipo de fallas más frecuentes</div><div id="intFF"><div style="padding:24px;text-align:center;color:var(--slate400);font-size:13px;line-height:1.6">Genera reportes para ver los tipos de fallas más frecuentes</div></div></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-        <div class="card"><div class="ctitle">Correctivos por proveedor</div><div id="intCP"></div></div>
-        <div class="card"><div class="ctitle">Sistemas apagados / condicionados</div><div id="intSA"></div></div>
+        <div class="card"><div class="ctitle">Correctivos por proveedor</div><div id="intCP"><div style="padding:24px;text-align:center;color:var(--slate400);font-size:13px;line-height:1.6">Genera reportes para ver correctivos por proveedor</div></div></div>
+        <div class="card"><div class="ctitle">Sistemas apagados / condicionados</div><div id="intSA"><div style="padding:24px;text-align:center;color:var(--slate400);font-size:13px;line-height:1.6">Sin sistemas apagados o condicionados ✓</div></div></div>
       </div>
-      <div class="card"><div class="ctitle">Rendimiento por zona</div><div id="intZona"></div></div>
+      <div class="card"><div class="ctitle">Rendimiento por zona</div><div id="intZona"><div style="padding:24px;text-align:center;color:var(--slate400);font-size:13px;line-height:1.6">Genera reportes con zona asignada para ver este análisis</div></div></div>
     </div>
 
     <!-- PERFIL PROVEEDOR -->
@@ -718,7 +723,121 @@ a{color:var(--green);text-decoration:none}
       </div>
     </div>
 
+    <!-- ─── COBRANZA ─── -->
+    <div id="vCobranza" class="view">
+      <div class="ph">
+        <div><div class="pt">Cobranza Coppel</div><div class="ps">Control de pagos por reporte — desde la visita hasta el cobro</div></div>
+        <button class="btn btn-p admin-only" style="display:none" onclick="exportCobCSV()">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Exportar CSV
+        </button>
+      </div>
+
+      <!-- KPIs cobranza -->
+      <div class="sg" id="cobStats"></div>
+
+      <!-- Filtros -->
+      <div class="fbar">
+        <input class="srch" type="text" id="cobQ" placeholder="Buscar por tienda, folio..." oninput="renderCobranza()">
+        <select class="fsel" id="cobEstatus" onchange="renderCobranza()">
+          <option value="">Todos los estatus</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="aprobado">Aprobado</option>
+          <option value="revision">En revisión Coppel</option>
+          <option value="pagado">Pagado</option>
+        </select>
+        <select class="fsel admin-only" id="cobProv" onchange="renderCobranza()" style="display:none">
+          <option value="">Todos los proveedores</option>
+        </select>
+      </div>
+
+      <!-- Tabla -->
+      <div class="card" style="padding:0;overflow:hidden">
+        <table class="tbl"><thead><tr>
+          <th>Folio</th>
+          <th>Tienda</th>
+          <th>Tipo de trabajo</th>
+          <th>Fecha visita</th>
+          <th class="admin-only" style="display:none">Proveedor</th>
+          <th>Monto (MXN)</th>
+          <th>Días sin pago</th>
+          <th>Estatus</th>
+          <th>Acciones</th>
+        </tr></thead>
+        <tbody id="cobBody"></tbody></table>
+      </div>
+    </div>
+
   </div><!-- /main -->
+</div>
+
+<!-- MODAL: Cobranza -->
+<div class="mo" id="moCob">
+  <div class="md">
+    <div class="md-t">Gestionar cobro</div>
+    <div class="md-s" id="moCobSub">—</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="lf" style="grid-column:1/-1">
+        <label>Monto a cobrar a Coppel (MXN)</label>
+        <input type="number" id="cob_monto" placeholder="0.00" step="0.01" min="0"
+          style="width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:8px;font-size:20px;font-weight:700;color:white;outline:none;text-align:center">
+      </div>
+      <div class="lf">
+        <label>Estatus de pago</label>
+        <select id="cob_estatus" style="width:100%;padding:10px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:8px;font-size:14px;color:white;outline:none">
+          <option value="pendiente">⏳ Pendiente</option>
+          <option value="aprobado">✅ Aprobado</option>
+          <option value="revision">🔍 En revisión Coppel</option>
+          <option value="pagado">💰 Pagado</option>
+        </select>
+      </div>
+      <div class="lf">
+        <label>Fecha de pago (si ya pagó)</label>
+        <input type="date" id="cob_fecha_pago"
+          style="width:100%;padding:10px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:8px;font-size:14px;color:white;outline:none">
+      </div>
+      <div class="lf" style="grid-column:1/-1">
+        <label>N° de factura / referencia</label>
+        <input type="text" id="cob_factura" placeholder="FAC-2026-001"
+          style="width:100%;padding:10px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:8px;font-size:14px;color:white;outline:none">
+      </div>
+      <div class="lf" style="grid-column:1/-1">
+        <label>Notas internas</label>
+        <textarea id="cob_notas" placeholder="Observaciones sobre este cobro..."
+          style="width:100%;padding:10px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:8px;font-size:14px;color:white;outline:none;resize:vertical;min-height:70px;font-family:var(--font)"></textarea>
+      </div>
+    </div>
+    <input type="hidden" id="cob_rep_id">
+    <div class="ma">
+      <button class="btn btn-s" onclick="closeMo('moCob')">Cancelar</button>
+      <button class="btn btn-p" onclick="saveCob()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Editar reporte -->
+<div class="mo" id="moEdit">
+  <div class="md" style="width:560px;max-height:90vh;overflow-y:auto">
+    <div class="md-t">Editar reporte</div>
+    <div class="md-s">Corrige los datos del reporte. Las fotos no se pueden cambiar en esta versión.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="lf"><label>Folio</label><input type="text" id="ed_folio"></div>
+      <div class="lf"><label>Fecha</label><input type="date" id="ed_fecha"></div>
+      <div class="lf" style="grid-column:1/-1"><label>Tienda / Cliente</label><input type="text" id="ed_cliente"></div>
+      <div class="lf"><label>Ciudad</label><input type="text" id="ed_ciudad"></div>
+      <div class="lf"><label>Zona</label><input type="text" id="ed_zona"></div>
+      <div class="lf"><label>Técnico</label><input type="text" id="ed_tecnico"></div>
+      <div class="lf"><label>Contrato Coppel</label><input type="text" id="ed_contrato"></div>
+    </div>
+    <div class="lf" style="margin-top:8px"><label>Observaciones generales</label><textarea id="ed_obs" style="width:100%;padding:9px 12px;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;background:rgba(255,255,255,.06);color:white;font-size:13px;min-height:80px;resize:vertical;outline:none"></textarea></div>
+    <div class="lf"><label>Recomendaciones al cliente</label><textarea id="ed_rec" style="width:100%;padding:9px 12px;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;background:rgba(255,255,255,.06);color:white;font-size:13px;min-height:60px;resize:vertical;outline:none"></textarea></div>
+    <div class="lf"><label>Materiales utilizados</label><textarea id="ed_mat" style="width:100%;padding:9px 12px;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;background:rgba(255,255,255,.06);color:white;font-size:13px;min-height:60px;resize:vertical;outline:none"></textarea></div>
+    <input type="hidden" id="ed_id">
+    <div class="ma">
+      <button class="btn btn-s" onclick="closeMo('moEdit')">Cancelar</button>
+      <button class="btn btn-p" onclick="saveEdit()">Guardar cambios</button>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL: Agregar proveedor -->
@@ -770,7 +889,7 @@ const SECS=[
 ];
 
 const STLABELS={ok:'✓ OK',warn:'⚠ Obs.',bad:'✗ Falla',na:'N/A'};
-const STEPS_LABELS=['Tipo','Datos','Secciones','Mediciones','Conclusiones','Resumen'];
+const STEPS_LABELS=['Tipo','Datos','Secciones','Conclusiones','Resumen'];
 
 function save(){localStorage.setItem('sr3_rep',JSON.stringify(reportes));localStorage.setItem('sr3_usr',JSON.stringify(usuarios))}
 function gv(id){return document.getElementById(id)?.value?.trim()||''}
@@ -792,6 +911,7 @@ function doLogin(){
   if(u.rol==='admin'){
     document.querySelectorAll('.admin-only').forEach(el=>el.style.display='');
     populateFilters();
+    populateCobFilters();
   } else {
     document.querySelectorAll('.prov-only').forEach(el=>el.style.display='');
   }
@@ -821,6 +941,7 @@ function nav(v){
   if(v==='proveedores')renderProvs();
   if(v==='inteligencia')renderInt();
   if(v==='perfil')renderPerfil();
+  if(v==='cobranza'){renderCobranza();populateCobFilters();}
 }
 
 // ═══════ DASHBOARD ═══════
@@ -836,7 +957,7 @@ function renderDash(){
     <div class="stat g"><div class="sv">${mr.length}</div><div class="sl">Reportes totales</div></div>
     <div class="stat b"><div class="sv">${mr.filter(r=>r.fecha?.startsWith(mes)).length}</div><div class="sl">Este mes</div></div>
     <div class="stat a"><div class="sv">${corrs}</div><div class="sl">Con correctivo</div></div>
-    <div class="stat r"><div class="sv">${apag}</div><div class="sl">Sistemas apagados/cond.</div></div>`;
+    <div class="stat r"><div class="sv">${(() => { const p=mr.filter(r=>!r.cob?.estatus||r.cob.estatus==='pendiente').reduce((s,r)=>s+(r.cob?.monto||0),0); return p>0?'$'+p.toLocaleString('es-MX'):'$0'; })()}</div><div class="sl">Pendiente de cobro</div></div>`;
   const b=document.getElementById('nBadge');
   b.style.display=corrs>0?'':'none';b.textContent=corrs;
   const recent=mr.slice(0,6);
@@ -854,17 +975,14 @@ function renderDash(){
 function initForm(){
   fStep=0;photos={};stData={};encDec=null;reqCorr=null;tipoSel=null;secsActivas=new Set();
   document.querySelectorAll('.fstep').forEach((s,i)=>s.classList.toggle('active',i===0));
+  const fEstado=document.getElementById('f_estado');
+  if(fEstado){fEstado.value='';updateCiudades();}
   document.getElementById('f_fecha').value=new Date().toISOString().split('T')[0];
   document.getElementById('btn0').disabled=true;
   renderFProg();
-  // Tipo cards
-  document.getElementById('tipoWrap').innerHTML=TIPOS.map(t=>`
-    <button class="tipo-card" onclick="selTipo('${t.id}',this)">
-      <span class="ti">${t.icon}</span>
-      <div class="tn">${t.name}</div>
-      <div class="td">${t.desc}</div>
-    </button>`).join('');
-  // Secciones
+  // Reset tipo card selections
+  document.querySelectorAll('.tipo-card').forEach(c=>c.classList.remove('sel'));
+  // Secciones chips rendered by selTipo
   document.getElementById('secsWrap').innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap">` +
     SECS.map(s=>`<div class="sec-toggle" id="stog_${s.id}" onclick="toggleSec('${s.id}',this)" style="padding:8px 14px;border-radius:99px;border:2px solid var(--slate200);background:white;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--slate600);transition:all .15s">
       <span>${s.icon}</span><span>${s.name}</span>
@@ -937,7 +1055,6 @@ function fNext(){
   document.getElementById('fs'+fStep).classList.remove('active');
   fStep++;
   if(fStep===2)buildSecContent();
-  if(fStep===3)buildMedInvWrap();
   document.getElementById('fs'+fStep).classList.add('active');
   renderFProg();
   if(fStep===STEPS_LABELS.length-1)buildSummary();
@@ -1145,7 +1262,7 @@ function buildSummary(){
   const rows=[
     ['Tipo de trabajo',t?`${t.icon} ${t.name}`:'—'],
     ['Tienda / Cliente',tienda],
-    ['Ciudad',gv('f_ciudad')||'—'],
+    ['Ciudad / Estado',(gv('f_ciudad')?gv('f_ciudad')+', ':'')+gv('f_estado')||'—'],
     ['Zona',gv('f_zona')||'—'],
     ['Contrato Coppel',gv('f_contrato')||'—'],
     ['Folio',gv('f_folio')||'—'],
@@ -1154,8 +1271,7 @@ function buildSummary(){
     ['Sistema',`${gv('f_kwp')||'—'} kWp · ${gv('f_paneles')||'—'} mód. · ${gv('f_ninv')||'—'} inv.`],
     ['Secciones activas',[...secsActivas].map(s=>SECS.find(x=>x.id===s)?.name).join(', ')||'—'],
     ['Fotos cargadas',Object.keys(photos).length+' foto(s)'],
-    ['Potencia actual',gv('m_pot')?gv('m_pot')+' kW':'—'],
-    ['kWh este mes',gv('m_kwh_mes')||'—'],
+    ['kWh este mes',gv('m_kwh_mes2')||'—'],
     ['Decisión encendido',encDec==='si'?'✅ Seguro':encDec==='cond'?'⚠️ Condicionado':encDec==='no'?'🚫 Apagado':'—'],
     ['Correctivo',reqCorr===null?'—':reqCorr?`Sí · ${gv('f_prior')||'—'}`:'No'],
     ['Proveedor',CU?.empresa||'—'],
@@ -1183,7 +1299,7 @@ async function saveAndPDF(){
     fecha:gv('f_fecha'),
     num_tienda:num,
     cliente:num?`Tienda #${num} ${gv('f_cliente')}`.trim():gv('f_cliente'),
-    ciudad:gv('f_ciudad'),zona:gv('f_zona'),dir:gv('f_dir'),
+    ciudad:(gv('f_ciudad')?gv('f_ciudad')+', ':'')+gv('f_estado'),zona:gv('f_zona'),dir:gv('f_dir'),
     contrato:gv('f_contrato'),contacto:gv('f_contacto'),tel_contacto:gv('f_tel_contacto'),
     tipo:t?.name||tipoSel,tipo_id:tipoSel,
     alcances:gv('f_alcances'),exclusiones:gv('f_exclusiones'),
@@ -1192,12 +1308,7 @@ async function saveAndPDF(){
     kwp:gv('f_kwp'),paneles:gv('f_paneles'),ninv:gv('f_ninv'),anio:gv('f_anio'),
     mpanel:gv('f_mpanel'),modpanel:gv('f_modpanel'),minv:gv('f_minv'),modinv:gv('f_modinv'),
     secsActivas:[...secsActivas],
-    // mediciones
-    m_pot:gv('m_pot'),m_vdc:gv('m_vdc'),m_vac:gv('m_vac'),m_idc:gv('m_idc'),
-    m_temp:gv('m_temp'),m_kwh_hoy:gv('m_kwh_hoy'),m_kwh_mes:gv('m_kwh_mes'),m_fp:gv('m_fp'),
-    m_s1v:gv('m_s1_v'),m_s1i:gv('m_s1_i'),m_s2v:gv('m_s2_v'),m_s2i:gv('m_s2_i'),
-    m_s3v:gv('m_s3_v'),m_s3i:gv('m_s3_i'),m_tierra:gv('m_tierra'),m_aislam:gv('m_aislam'),
-    m_obs:gv('m_obs'),
+    // mediciones removidas - se capturan en datos del sistema
     // secciones
     sem_desc:gv('f_sem_desc'),inv_desc:gv('f_inv_desc'),
     termo_eq:gv('f_termo_eq'),termo_max:gv('f_termo_max'),termo_obs:gv('f_termo_obs'),
@@ -1222,7 +1333,7 @@ function generatePDF(r){
   const{jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'letter'});
   const PW=215.9,PH=279.4,ML=18,MR=18,MT=20,CW=PW-ML-MR;
-  const GR='#16a34a',GR2='#14532d',GRL='#dcfce7',GY='#475569',GYL='#94a3b8',BK='#0f172a',WH='#ffffff';
+  const GR='#8eb436',GR2='#666666',GRL='#e8f0d0',GY='#666666',GYL='#868788',BK='#222222',WH='#ffffff';
 
   function deco(){
     doc.setFillColor(GR);doc.triangle(PW-28,0,PW,0,PW,38,'F');
@@ -1322,39 +1433,7 @@ function generatePDF(r){
   // Cover photo
   if(r.photos?.p_s1){const ih=60;addImg(r.photos.p_s1,ML,y,CW,ih);y+=ih+3;y=capt('Vista general del sembrado fotovoltaico.',ML,y,CW)+2}
 
-  // PAGE 2 — Mediciones eléctricas
-  doc.addPage();deco();y=logoHdr(MT)+4;
-  y=h2('MEDICIONES ELÉCTRICAS',y);y+=2;
-  if(r.m_pot||r.m_vdc||r.m_vac){
-    y=lectTable([
-      ['Potencia actual',r.m_pot?r.m_pot+' kW':'—'],
-      ['Voltaje DC',r.m_vdc?r.m_vdc+' V':'—'],
-      ['Voltaje AC',r.m_vac?r.m_vac+' V':'—'],
-      ['Corriente DC',r.m_idc?r.m_idc+' A':'—'],
-      ['Temperatura',r.m_temp?r.m_temp+' °C':'—'],
-    ],y)+4;
-    y=lectTable([
-      ['kWh hoy',r.m_kwh_hoy?r.m_kwh_hoy+' kWh':'—'],
-      ['kWh mes',r.m_kwh_mes?r.m_kwh_mes+' kWh':'—'],
-      ['Factor P.',r.m_fp||'—'],
-      ['Resist. tierra',r.m_tierra?r.m_tierra+' Ω':'—'],
-      ['Aislam. DC',r.m_aislam?r.m_aislam+' MΩ':'—'],
-    ],y)+4;
-  }
-  if(r.m_s1v||r.m_s2v||r.m_s3v){
-    y=h2('Mediciones por string',y);y+=2;
-    y=lectTable([
-      ['String 1 Voc',r.m_s1v?r.m_s1v+' V':'—'],
-      ['String 1 Isc',r.m_s1i?r.m_s1i+' A':'—'],
-      ['String 2 Voc',r.m_s2v?r.m_s2v+' V':'—'],
-      ['String 2 Isc',r.m_s2i?r.m_s2i+' A':'—'],
-      ['String 3 Voc',r.m_s3v?r.m_s3v+' V':'—'],
-      ['String 3 Isc',r.m_s3i?r.m_s3i+' A':'—'],
-    ],y)+4;
-  }
-  if(r.m_obs){y=h2('Observaciones sobre mediciones',y);y+=2;y=body(r.m_obs,y,CW)+4;}
-
-  // PAGE 3 — Sembrado + Estado
+  // PAGE 2 — Sembrado + Estado
   doc.addPage();deco();y=logoHdr(MT)+4;
   y=h2('1.- INSPECCIÓN DEL SEMBRADO FOTOVOLTAICO',y);y+=2;
   y=body(r.sem_desc,y,CW)+4;
@@ -1535,9 +1614,51 @@ function renderHist(){
     <td>${r.requiereCorr?`<span class="bdg bdg-warn">Sí${r.prioridad?' · '+r.prioridad.charAt(2):''}</span>`:'<span class="bdg bdg-ok">No</span>'}</td>
     <td style="white-space:nowrap">
       <button class="btn btn-s btn-sm" onclick='generatePDF(reportes.find(x=>x.id==="${r.id}"))'>⬇ PDF</button>
+      <button class="btn btn-s btn-sm" style="margin-left:4px" onclick="editReport('${r.id}')">✏️ Editar</button>
       ${CU?.rol==='admin'?`<button class="btn btn-d btn-sm" style="margin-left:4px" onclick="delR('${r.id}')">✕</button>`:''}
     </td>
   </tr>`).join('');
+}
+
+function editReport(id){
+  const r=reportes.find(x=>x.id===id);
+  if(!r)return;
+  document.getElementById('ed_id').value=id;
+  document.getElementById('ed_folio').value=r.folio||'';
+  document.getElementById('ed_fecha').value=r.fecha||'';
+  document.getElementById('ed_cliente').value=r.cliente||'';
+  document.getElementById('ed_ciudad').value=r.ciudad||'';
+  document.getElementById('ed_zona').value=r.zona||'';
+  document.getElementById('ed_tecnico').value=r.tecnico||'';
+  document.getElementById('ed_contrato').value=r.contrato||'';
+  document.getElementById('ed_obs').value=r.obs||'';
+  document.getElementById('ed_rec').value=r.rec||'';
+  document.getElementById('ed_mat').value=r.mat||'';
+  openMo('moEdit');
+}
+
+function saveEdit(){
+  const id=document.getElementById('ed_id').value;
+  const idx=reportes.findIndex(x=>x.id===id);
+  if(idx===-1)return;
+  reportes[idx]={
+    ...reportes[idx],
+    folio:document.getElementById('ed_folio').value.trim(),
+    fecha:document.getElementById('ed_fecha').value,
+    cliente:document.getElementById('ed_cliente').value.trim(),
+    ciudad:document.getElementById('ed_ciudad').value.trim(),
+    zona:document.getElementById('ed_zona').value.trim(),
+    tecnico:document.getElementById('ed_tecnico').value.trim(),
+    contrato:document.getElementById('ed_contrato').value.trim(),
+    obs:document.getElementById('ed_obs').value.trim(),
+    rec:document.getElementById('ed_rec').value.trim(),
+    mat:document.getElementById('ed_mat').value.trim(),
+    editadoEn:new Date().toISOString(),
+  };
+  save();
+  closeMo('moEdit');
+  renderHist();
+  showToast('Reporte actualizado correctamente','success');
 }
 
 function delR(id){
@@ -1599,6 +1720,52 @@ function delProv(id){
 }
 
 // ═══════ INTELIGENCIA ═══════
+const CIUDADES={
+  'Aguascalientes':['Aguascalientes','Asientos','Calvillo','Jesús María','Pabellón de Arteaga','Rincón de Romos'],
+  'Baja California':['Ensenada','Mexicali','Playas de Rosarito','Tecate','Tijuana'],
+  'Baja California Sur':['Comondú','La Paz','Loreto','Los Cabos','Mulegé'],
+  'Campeche':['Calkiní','Campeche','Carmen','Escárcega','Hopelchén'],
+  'Chiapas':['Comitán de Domínguez','San Cristóbal de las Casas','Tapachula','Tonalá','Tuxtla Gutiérrez'],
+  'Chihuahua':['Chihuahua','Ciudad Juárez','Cuauhtémoc','Delicias','Hidalgo del Parral','Parral'],
+  'Ciudad de México':['Álvaro Obregón','Azcapotzalco','Benito Juárez','Coyoacán','Cuauhtémoc','Gustavo A. Madero','Iztapalapa','Miguel Hidalgo','Tlalpan','Venustiano Carranza','Xochimilco'],
+  'Coahuila':['Monclova','Piedras Negras','Ramos Arizpe','Saltillo','Torreón'],
+  'Colima':['Colima','Manzanillo','Tecomán','Villa de Álvarez'],
+  'Durango':['Durango','Gómez Palacio','Lerdo','Pueblo Nuevo','Vicente Guerrero'],
+  'Estado de México':['Ecatepec','Naucalpan','Nezahualcóyotl','Toluca','Tlalnepantla','Tultitlán','Valle de Chalco'],
+  'Guanajuato':['Celaya','Guanajuato','Irapuato','León','Salamanca','San Miguel de Allende'],
+  'Guerrero':['Acapulco','Chilpancingo','Iguala','Taxco','Zihuatanejo'],
+  'Hidalgo':['Pachuca','Tizayuca','Tula de Allende','Tulancingo'],
+  'Jalisco':['Guadalajara','Puerto Vallarta','San Pedro Tlaquepaque','Tlajomulco de Zúñiga','Tonalá','Zapopan'],
+  'Michoacán':['Lázaro Cárdenas','Morelia','Uruapan','Zamora'],
+  'Morelos':['Cuernavaca','Cuautla','Jiutepec','Temixco'],
+  'Nayarit':['Bahía de Banderas','Tepic','Xalisco'],
+  'Nuevo León':['Apodaca','Cadereyta','García','General Escobedo','Guadalupe','Juárez','Linares','Monterrey','Sabinas Hidalgo','San Nicolás de los Garza','San Pedro Garza García','Santa Catarina'],
+  'Oaxaca':['Huajuapan de León','Oaxaca de Juárez','Salina Cruz','San Juan Bautista Tuxtepec'],
+  'Puebla':['Cholula','Puebla','San Andrés Cholula','Tehuacán','Teziutlán'],
+  'Querétaro':['Corregidora','El Marqués','Querétaro','San Juan del Río'],
+  'Quintana Roo':['Benito Juárez (Cancún)','Cozumel','Felipe Carrillo Puerto','Playa del Carmen','Tulum'],
+  'San Luis Potosí':['Ciudad Valles','Matehuala','San Luis Potosí','Soledad de Graciano Sánchez'],
+  'Sinaloa':['Ahome (Los Mochis)','Culiacán','Guasave','Mazatlán'],
+  'Sonora':['Ciudad Obregón','Guaymas','Hermosillo','Nogales'],
+  'Tabasco':['Cárdenas','Centro (Villahermosa)','Comalcalco','Paraíso'],
+  'Tamaulipas':['Altamira','Ciudad Madero','Matamoros','Nuevo Laredo','Reynosa','Tampico','Victoria'],
+  'Tlaxcala':['Apizaco','Chiautempan','Tlaxcala','Zacatelco'],
+  'Veracruz':['Boca del Río','Coatzacoalcos','Córdoba','Orizaba','Poza Rica','Tuxpan','Veracruz','Xalapa'],
+  'Yucatán':['Kanasín','Mérida','Progreso','Umán','Valladolid'],
+  'Zacatecas':['Fresnillo','Guadalupe','Jerez de García Salinas','Zacatecas'],
+};
+
+function updateCiudades(estadoId='f_estado', ciudadId='f_ciudad'){
+  const estado=document.getElementById(estadoId)?.value||'';
+  const sel=document.getElementById(ciudadId);
+  if(!sel)return;
+  const ciudades=CIUDADES[estado]||[];
+  sel.innerHTML=ciudades.length
+    ? '<option value="">Selecciona ciudad...</option>'+ciudades.map(c=>`<option>${c}</option>`).join('')
+    : '<option value="">Primero selecciona estado</option>';
+}
+
+
 function renderInvFields(){
   const n=parseInt(document.getElementById('f_ninv')?.value)||0;
   const wrap=document.getElementById('invFieldsWrap');
@@ -1640,37 +1807,6 @@ function renderStrFields(invNum){
            <div class="med-item"><label>Str${s} Isc<span class="unit">A</span></label><input type="number" id="inv${invNum}_s${s}_i" placeholder="—" step="0.1"></div>`;
   }
   html+='</div>';
-  wrap.innerHTML=html;
-}
-
-function buildMedInvWrap(){
-  const n=parseInt(document.getElementById('f_ninv')?.value)||0;
-  const wrap=document.getElementById('medInvWrap');
-  if(!wrap)return;
-  if(n===0){wrap.innerHTML='<div style="text-align:center;padding:24px;color:var(--slate400);font-size:13px">Regresa al paso anterior e ingresa el número de inversores.</div>';return}
-  let html='';
-  for(let i=1;i<=Math.min(n,6);i++){
-    const modelo=document.getElementById('inv'+i+'_modelo')?.value||`Inversor ${i}`;
-    const nstr=parseInt(document.getElementById('inv'+i+'_nstr')?.value)||0;
-    html+=`<div style="background:var(--slate50);border:1px solid var(--slate200);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:12px">
-      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">Inversor ${i} — ${modelo}</div>
-      <div class="med-grid" style="margin-bottom:10px">
-        <div class="med-item"><label>Potencia actual<span class="unit">kW</span></label><input type="number" id="m_inv${i}_pot" placeholder="9.2" step="0.1"></div>
-        <div class="med-item"><label>V salida AC<span class="unit">V</span></label><input type="number" id="m_inv${i}_vac" placeholder="220"></div>
-        <div class="med-item"><label>I salida AC<span class="unit">A</span></label><input type="number" id="m_inv${i}_iac" placeholder="41.8" step="0.1"></div>
-        <div class="med-item"><label>V entrada DC<span class="unit">V</span></label><input type="number" id="m_inv${i}_vdc" placeholder="380"></div>
-      </div>`;
-    if(nstr>0){
-      html+=`<div style="font-size:11px;font-weight:600;color:var(--slate500);margin-bottom:8px">Mediciones por string</div>
-             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">`;
-      for(let s=1;s<=Math.min(nstr,12);s++){
-        html+=`<div class="med-item"><label>Str${s} Voc<span class="unit">V</span></label><input type="number" id="m_inv${i}_s${s}_v" placeholder="—" step="0.1"></div>
-               <div class="med-item"><label>Str${s} Isc<span class="unit">A</span></label><input type="number" id="m_inv${i}_s${s}_i" placeholder="—" step="0.1"></div>`;
-      }
-      html+='</div>';
-    }
-    html+='</div>';
-  }
   wrap.innerHTML=html;
 }
 
@@ -1791,7 +1927,144 @@ function savePerfil(){
   save();renderPerfil();showToast('Perfil actualizado','success');
 }
 
-// ═══════ TOAST ═══════
+// ═══════ COBRANZA ═══════
+const COB_LABELS={
+  pendiente:{txt:'⏳ Pendiente',   bg:'#fffbeb',c:'#92400e',border:'#fcd34d'},
+  aprobado: {txt:'✅ Aprobado',    bg:'#ecfdf5',c:'#065f46',border:'#6ee7b7'},
+  revision: {txt:'🔍 En revisión', bg:'#eff6ff',c:'#1d4ed8',border:'#93c5fd'},
+  pagado:   {txt:'💰 Pagado',      bg:'#f5f3ff',c:'#5b21b6',border:'#c4b5fd'},
+};
+
+function diasSinPago(r){
+  const desde=r.cob?.fecha_pago?null:r.fecha;
+  if(!desde)return 0;
+  const d1=new Date(desde),d2=new Date();
+  return Math.floor((d2-d1)/(1000*60*60*24));
+}
+
+function renderCobranza(){
+  const q=(document.getElementById('cobQ')?.value||'').toLowerCase();
+  const fe=document.getElementById('cobEstatus')?.value||'';
+  const fp=document.getElementById('cobProv')?.value||'';
+  const mr=myR();
+  const f=mr.filter(r=>
+    (!q||(r.cliente||'').toLowerCase().includes(q)||(r.folio||'').toLowerCase().includes(q))&&
+    (!fe||(r.cob?.estatus||'pendiente')===fe)&&
+    (!fp||r.prov_empresa===fp)
+  );
+
+  // KPIs
+  const total=mr.reduce((s,r)=>s+(r.cob?.monto||0),0);
+  const pendiente=mr.filter(r=>!r.cob?.estatus||r.cob.estatus==='pendiente').reduce((s,r)=>s+(r.cob?.monto||0),0);
+  const revision=mr.filter(r=>r.cob?.estatus==='revision').reduce((s,r)=>s+(r.cob?.monto||0),0);
+  const pagado=mr.filter(r=>r.cob?.estatus==='pagado').reduce((s,r)=>s+(r.cob?.monto||0),0);
+  const sinMonto=mr.filter(r=>!r.cob?.monto).length;
+  const fmt=n=>n.toLocaleString('es-MX',{style:'currency',currency:'MXN',minimumFractionDigits:0});
+
+  document.getElementById('cobStats').innerHTML=`
+    <div class="stat r"><div class="sv">${fmt(pendiente)}</div><div class="sl">Pendiente de cobro</div></div>
+    <div class="stat b"><div class="sv">${fmt(revision)}</div><div class="sl">En revisión Coppel</div></div>
+    <div class="stat g"><div class="sv">${fmt(pagado)}</div><div class="sl">Cobrado (pagado)</div></div>
+    <div class="stat"><div class="sv">${sinMonto}</div><div class="sl">Sin monto asignado</div></div>`;
+
+  // Badge
+  const b=document.getElementById('cobBadge');
+  const pend=mr.filter(r=>!r.cob?.estatus||r.cob.estatus==='pendiente').length;
+  b.style.display=pend>0?'':'none';b.textContent=pend;
+
+  const tbody=document.getElementById('cobBody');
+  if(!f.length){
+    tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:40px;color:#94a3b8">Sin reportes para los filtros seleccionados</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML=f.map(r=>{
+    const est=r.cob?.estatus||'pendiente';
+    const lbl=COB_LABELS[est]||COB_LABELS.pendiente;
+    const dias=diasSinPago(r);
+    const monto=r.cob?.monto;
+    const diasColor=dias>60?'color:#ef4444;font-weight:700':dias>30?'color:#f59e0b;font-weight:600':'';
+    return `<tr>
+      <td style="font-family:monospace;font-size:12px">${r.folio}</td>
+      <td style="font-weight:500">${r.cliente||'—'}<br><span style="font-size:11px;color:#94a3b8">${r.ciudad||'—'}</span></td>
+      <td>${r.tipo||'—'}</td>
+      <td>${r.fecha||'—'}</td>
+      ${CU?.rol==='admin'?`<td>${r.prov_empresa||'—'}</td>`:''}
+      <td style="font-weight:700;font-size:14px">${monto?`$${Number(monto).toLocaleString('es-MX')}`:'<span style="color:#94a3b8;font-size:12px">Sin asignar</span>'}</td>
+      <td style="${diasColor}">${est==='pagado'?'✓ Pagado':dias+' días'}</td>
+      <td><span class="bdg" style="background:${lbl.bg};color:${lbl.c};border:1px solid ${lbl.border}">${lbl.txt}</span></td>
+      <td>
+        <button class="btn btn-s btn-sm" onclick="openCob('${r.id}')">
+          ${CU?.rol==='admin'?'✏️ Gestionar':'👁 Ver'}
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function openCob(id){
+  const r=reportes.find(x=>x.id===id);
+  if(!r)return;
+  document.getElementById('cob_rep_id').value=id;
+  document.getElementById('moCobSub').textContent=`${r.folio} — ${r.cliente||'—'} — ${r.fecha||'—'}`;
+  document.getElementById('cob_monto').value=r.cob?.monto||'';
+  document.getElementById('cob_estatus').value=r.cob?.estatus||'pendiente';
+  document.getElementById('cob_fecha_pago').value=r.cob?.fecha_pago||'';
+  document.getElementById('cob_factura').value=r.cob?.factura||'';
+  document.getElementById('cob_notas').value=r.cob?.notas||'';
+  // Proveedores solo ven, admin puede editar
+  const editable=CU?.rol==='admin';
+  ['cob_monto','cob_estatus','cob_fecha_pago','cob_factura','cob_notas'].forEach(fid=>{
+    const el=document.getElementById(fid);
+    if(el)el.disabled=!editable;
+  });
+  openMo('moCob');
+}
+
+function saveCob(){
+  const id=document.getElementById('cob_rep_id').value;
+  const idx=reportes.findIndex(x=>x.id===id);
+  if(idx===-1)return;
+  reportes[idx].cob={
+    monto:parseFloat(document.getElementById('cob_monto').value)||0,
+    estatus:document.getElementById('cob_estatus').value||'pendiente',
+    fecha_pago:document.getElementById('cob_fecha_pago').value||'',
+    factura:document.getElementById('cob_factura').value.trim(),
+    notas:document.getElementById('cob_notas').value.trim(),
+    updatedAt:new Date().toISOString(),
+  };
+  save();
+  closeMo('moCob');
+  renderCobranza();
+  renderDash();
+  showToast('Cobro actualizado','success');
+}
+
+function exportCobCSV(){
+  const mr=myR();
+  const rows=[['Folio','Tienda','Ciudad','Tipo','Fecha visita','Proveedor','Monto MXN','Estatus','Días sin pago','N° Factura','Notas']];
+  mr.forEach(r=>{
+    const dias=diasSinPago(r);
+    rows.push([r.folio,r.cliente,r.ciudad,r.tipo,r.fecha,r.prov_empresa,
+      r.cob?.monto||0,r.cob?.estatus||'pendiente',
+      r.cob?.estatus==='pagado'?0:dias,
+      r.cob?.factura||'',r.cob?.notas||'']);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download='Cobranza_Coppel_EnergiaSimple.csv';
+  a.click();
+}
+
+function populateCobFilters(){
+  const sel=document.getElementById('cobProv');
+  if(!sel)return;
+  const provs=[...new Set(reportes.map(r=>r.prov_empresa).filter(Boolean))];
+  sel.innerHTML='<option value="">Todos los proveedores</option>'+provs.map(p=>`<option>${p}</option>`).join('');
+}
+
+
 function showToast(msg,type=''){
   const t=document.getElementById('toast');
   t.textContent=msg;t.className='toast show'+(type?' '+type:'');
