@@ -599,6 +599,7 @@ a{color:var(--green);text-decoration:none}
 
       <!-- STEP 2: Secciones dinámicas -->
       <div class="fstep" id="fs2">
+        <input type="hidden" id="f_mat_seleccionado" value="">
         <div id="secContent"></div>
         <div class="fnav"><button class="btn btn-s" onclick="fBack()">← Atrás</button><button class="btn btn-p" onclick="fNext()">Continuar →</button></div>
       </div>
@@ -890,10 +891,12 @@ const SECS=[
   {id:'tablero',icon:'🔌',name:'Tablero AC / breakers',desc:'Estado del tablero eléctrico'},
   {id:'termografia',icon:'🌡️',name:'Inspección termográfica',desc:'Fotos con cámara termográfica'},
   {id:'antes_despues',icon:'📸',name:'Antes y después',desc:'Evidencia fotográfica de trabajos realizados'},
+  {id:'estructura_tipo',icon:'🏗️',name:'Tipo de estructura',desc:'Material y estado de montaje'},
+  {id:'canalizaciones',icon:'🔧',name:'Canalizaciones y cableado',desc:'Fotos de canalización y estado'},
   {id:'monitoreo',icon:'💻',name:'Monitoreo en plataforma',desc:'Capturas y datos de generación'},
 ];
 
-const STLABELS={ok:'✓ OK',warn:'⚠ Obs.',bad:'✗ Falla',na:'N/A'};
+const STLABELS={ok:'OK',warn:'Observacion',bad:'Requiere atencion',na:'N/A'};
 const STEPS_LABELS=['Tipo','Datos','Secciones','Conclusiones','Resumen'];
 
 function save(){localStorage.setItem('sr3_rep',JSON.stringify(reportes));localStorage.setItem('sr3_usr',JSON.stringify(usuarios))}
@@ -1024,11 +1027,11 @@ function selTipo(id,btn){
   document.getElementById('alcBox').style.display='block';
   // Auto-select secciones por tipo
   const defaults={
-    prev:['sembrado','inversores','tablero','monitoreo'],
-    corr:['sembrado','inversores','tablero','antes_despues'],
+    prev:['sembrado','estructura_tipo','inversores','tablero','canalizaciones','monitoreo'],
+    corr:['sembrado','estructura_tipo','inversores','tablero','canalizaciones','antes_despues'],
     mon:['monitoreo','inversores'],
-    rein:['sembrado','inversores','tablero','antes_despues'],
-    int:['sembrado','inversores','tablero','termografia','antes_despues','monitoreo'],
+    rein:['sembrado','estructura_tipo','inversores','tablero','canalizaciones','antes_despues'],
+    int:['sembrado','estructura_tipo','inversores','tablero','termografia','canalizaciones','antes_despues','monitoreo'],
   };
   secsActivas=new Set(defaults[id]||[]);
   SECS.forEach(s=>{
@@ -1073,6 +1076,14 @@ function fBack(){
 }
 
 // ═══════ SECCIONES DINÁMICAS ═══════
+function selMat(val,btn){
+  document.querySelectorAll('#mat_wrap .stbtn').forEach(b=>b.className='stbtn');
+  btn.className='stbtn ok';
+  document.getElementById('f_mat_seleccionado').value=val;
+  const otroBox=document.getElementById('mat_otro_box');
+  if(otroBox)otroBox.style.display=val==='Otro'?'block':'none';
+}
+
 function buildSecContent(){
   const c=document.getElementById('secContent');
   c.innerHTML='';
@@ -1157,7 +1168,42 @@ function getSecHTML(id,name,icon){
       <div style="font-size:11px;color:var(--slate400);margin-top:4px">Solo archivos .PDF</div>
     </div>`);
 
-  if(id==='monitoreo') return secWrap(`
+  if(id==='estructura_tipo') return secWrap(`
+    <div class="sdiv">Material de la estructura de montaje</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px" id="mat_wrap">
+      ${['Losa de concreto','Lamina engargolada','Lamina KR18','Lamina trapezoidal','Techo verde','Otro'].map(m=>`
+        <button class="stbtn" onclick="selMat('${m}',this)" id="mat_${m.replace(/\s/g,'_')}">${m}</button>`).join('')}
+    </div>
+    <div class="fg c1" style="margin-bottom:14px" id="mat_otro_box" style="display:none">
+      <div class="ff"><label>Especifica el tipo de material</label><input type="text" id="f_mat_otro" placeholder="Describe el tipo de material..."></div>
+    </div>
+    <div class="fg c1" style="margin-bottom:14px">
+      <div class="ff"><label>Estado general de la estructura</label><textarea id="f_est_desc" rows="3" placeholder="Estado de la estructura, oxido, deformaciones, soldaduras, estado del recubrimiento..."></textarea></div>
+    </div>
+    <div class="sdiv">Fotografias de la estructura (3 fotos)</div>
+    <div class="pg pg3">
+      ${psHTML('est1','Estructura — vista 1')}${psHTML('est2','Estructura — vista 2')}${psHTML('est3','Estructura — detalle')}
+    </div>`);
+
+  if(id==='canalizaciones') return secWrap(`
+    <div class="fg c1" style="margin-bottom:14px">
+      <div class="ff"><label>Estado de canalizaciones y cableado</label><textarea id="f_can_desc" rows="3" placeholder="Describe el estado de las canalizaciones: tuberia IMC, conduit, cable suelto, amarres, sujeciones, humedad..."></textarea></div>
+    </div>
+    <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:var(--r);padding:10px 14px;margin-bottom:14px;font-size:13px;color:#92400e">
+      ⚡ Sube fotos de canalizaciones en mal estado: cables sueltos, tuberias mal colocadas, daños en recubrimiento, humedades, etc.
+    </div>
+    <div class="sdiv">Fotografias de canalizaciones (hasta 5)</div>
+    <div class="pg pg3">
+      ${psHTML('can1','Canalizacion 1')}${psHTML('can2','Canalizacion 2')}${psHTML('can3','Canalizacion 3')}
+      ${psHTML('can4','Canalizacion 4')}${psHTML('can5','Canalizacion 5')}
+    </div>
+    <div class="sdiv">Estado</div>
+    ${stRow('Canalizaciones DC (tuberias/conduit)','st_can_dc','OK','Observacion','Falla')}
+    ${stRow('Cableado DC expuesto','st_cab_dc','OK','Requiere sujecion','Cable danado')}
+    ${stRow('Canalizaciones AC','st_can_ac','OK','Observacion','Falla')}
+    ${stRow('Puesta a tierra (cableado)','st_tierra_cab','OK','Verificar','Falla')}`);
+
+
     <div class="fg">
       <div class="ff"><label>Plataforma de monitoreo</label><input type="text" id="f_plat" placeholder="Fronius Solar.web / SolarEdge / Huawei FusionSolar"></div>
       <div class="ff"><label>kWh generados este mes</label><input type="number" id="f_kwh_mes2" step="0.1" placeholder="1040.5"></div>
@@ -1315,7 +1361,11 @@ async function saveAndPDF(){
     secsActivas:[...secsActivas],
     // mediciones removidas - se capturan en datos del sistema
     // secciones
-    sem_desc:gv('f_sem_desc'),inv_desc:gv('f_inv_desc'),
+    sem_desc:gv('f_sem_desc'),sem_estructura:gv('f_sem_estructura'),
+    inv_desc:gv('f_inv_desc'),
+    mat_estructura:gv('f_mat_seleccionado')||gv('f_mat_otro'),
+    est_desc:gv('f_est_desc'),
+    can_desc:gv('f_can_desc'),
     termo_eq:gv('f_termo_eq'),termo_max:gv('f_termo_max'),termo_obs:gv('f_termo_obs'),
     plat:gv('f_plat'),kwh_mes2:gv('f_kwh_mes2'),plat_obs:gv('f_plat_obs'),
     trab1:gv('f_trab1'),trab2:gv('f_trab2'),trab3:gv('f_trab3'),
@@ -1350,7 +1400,7 @@ function generatePDF(r){
     const fy=PH-12;
     doc.setFillColor(GR);doc.circle(ML+3,fy-2.5,2,'F');
     doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(GY);
-    doc.text('Avenida Alfonso Reyes 2819, 64410 Monterrey, N.L. | 81-10-62-88-21 | www.energiasimple.com',ML+7,fy);
+    doc.text('Av. Alfonso Reyes 2819, 64410 Monterrey, N.L.  |  81-10-62-88-21  |  www.energiasimple.com',ML+7,fy);
   }
 
   function logoHdr(y){
@@ -1358,26 +1408,28 @@ function generatePDF(r){
     doc.setTextColor(WH);doc.setFont('helvetica','bold');doc.setFontSize(6.5);
     const logoTxt=(r.prov_empresa||'PROV').substring(0,6);
     doc.text(logoTxt,ML+10,y+8,{align:'center'});
-    doc.setTextColor(GR2);doc.setFont('helvetica','bold');doc.setFontSize(12);
-    doc.text(r.prov_empresa||'Proveedor',ML+24,y+8);
+    doc.setTextColor(GR2);doc.setFont('helvetica','bold');doc.setFontSize(11);
+    const empName=(r.prov_empresa||'Proveedor').substring(0,28).replace(/í/g,'i').replace(/é/g,'e').replace(/á/g,'a').replace(/ó/g,'o').replace(/ú/g,'u').replace(/ñ/g,'n');
+    doc.text(empName,ML+24,y+9);
     doc.setTextColor(GYL);doc.setFont('helvetica','normal');doc.setFontSize(7.5);
-    doc.text(r.tipo||'Reporte FV',ML+24,y+13);
+    doc.text(sa(r.tipo||'Reporte FV'),ML+24,y+13);
     doc.setTextColor(GYL);doc.setFont('helvetica','normal');doc.setFontSize(7);
-    doc.text('Supervisado por Energía Simple',PW-MR,y+6,{align:'right'});
+    doc.text('Supervisado por Energia Simple',PW-MR,y+6,{align:'right'});
     doc.setTextColor(GR);doc.setFont('helvetica','bold');doc.setFontSize(8.5);
     doc.text('www.energiasimple.com',PW-MR,y+12,{align:'right'});
     doc.setDrawColor(GRL);doc.setLineWidth(0.3);doc.line(ML,y+17,PW-MR,y+17);
     return y+21;
   }
 
-  function h2(t,y){doc.setTextColor(BK);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text(t,ML,y);return y+6}
+  function h2(t,y){doc.setTextColor(BK);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text(sa(t),ML,y);return y+6}
+  function sa(t){return (t||'').replace(/[áàä]/g,'a').replace(/[éèë]/g,'e').replace(/[íìï]/g,'i').replace(/[óòö]/g,'o').replace(/[úùü]/g,'u').replace(/[ÁÀÄ]/g,'A').replace(/[ÉÈË]/g,'E').replace(/[ÍÌÏ]/g,'I').replace(/[ÓÒÖ]/g,'O').replace(/[ÚÙÜ]/g,'U').replace(/ñ/g,'n').replace(/Ñ/g,'N')}
   function body(t,y,mw){
     if(!t)return y;
     doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(GY);
-    const lines=doc.splitTextToSize(t,mw||CW);doc.text(lines,ML,y);return y+lines.length*4.5;
+    const lines=doc.splitTextToSize(sa(t),mw||CW);doc.text(lines,ML,y);return y+lines.length*4.5;
   }
   function addImg(src,x,y,w,h){if(!src)return;try{const f=src.startsWith('data:image/png')?'PNG':'JPEG';doc.addImage(src,f,x,y,w,h)}catch(e){}}
-  function capt(t,x,y,w){doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(GYL);const lines=doc.splitTextToSize(t,w);doc.text(lines,x+w/2,y,{align:'center'});return y+lines.length*3.5}
+  function capt(t,x,y,w){doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(GYL);const lines=doc.splitTextToSize(sa(t),w);doc.text(lines,x+w/2,y,{align:'center'});return y+lines.length*3.5}
 
   function lectTable(rows,y){
     const cw=CW/rows.length;
@@ -1389,7 +1441,7 @@ function generatePDF(r){
     doc.setDrawColor('#e2e8f0');doc.setLineWidth(0.2);doc.rect(ML,y,CW,9,'S');
     doc.setTextColor(BK);doc.setFont('helvetica','bold');doc.setFontSize(11);
     rows.forEach((r2,i)=>{
-      doc.text(r2[1]||'—',ML+i*cw+cw/2,y+6.5,{align:'center'});
+      doc.text((r2[1]||'-').toString(),ML+i*cw+cw/2,y+6.5,{align:'center'});
       if(i<rows.length-1){doc.setDrawColor('#e2e8f0');doc.line(ML+i*cw+cw,y,ML+i*cw+cw,y+9);}
     });
     return y+13;
@@ -1423,11 +1475,11 @@ function generatePDF(r){
   const tl=doc.splitTextToSize(`REPORTE — ${(r.cliente||'').toUpperCase()}`,CW);
   doc.text(tl,ML,y);y+=tl.length*7+2;
   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(GY);
-  doc.text(`Folio: `,ML,y);doc.setFont('helvetica','bold');doc.setTextColor(BK);doc.text(r.folio||'—',ML+12,y);
-  doc.setFont('helvetica','normal');doc.setTextColor(GY);doc.text('Fecha:',ML+CW/2,y);doc.setFont('helvetica','bold');doc.setTextColor(BK);doc.text(r.fecha||'—',ML+CW/2+12,y);y+=5;
+  doc.text('Folio: ',ML,y);doc.setFont('helvetica','bold');doc.setTextColor(BK);doc.text(r.folio||'-',ML+12,y);
+  doc.setFont('helvetica','normal');doc.setTextColor(GY);doc.text('Fecha:',ML+CW/2,y);doc.setFont('helvetica','bold');doc.setTextColor(BK);doc.text(r.fecha||'-',ML+CW/2+12,y);y+=5;
   doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(GY);
-  doc.text(`Tipo: ${r.tipo||'—'}  |  Zona: ${r.zona||'—'}  |  Ciudad: ${r.ciudad||'—'}  |  Contrato: ${r.contrato||'—'}`,ML,y);y+=5;
-  doc.text(`Sistema: ${r.kwp||'—'} kWp · ${r.paneles||'—'} módulos · ${r.ninv||'—'} inv.  |  Técnico: ${r.tecnico||'—'}  |  Visita #${r.visita_num||'—'}`,ML,y);y+=7;
+  doc.text('Tipo: '+sa(r.tipo||'-')+'  |  Zona: '+sa(r.zona||'-')+'  |  Ciudad: '+sa(r.ciudad||'-')+'  |  Contrato: '+(r.contrato||'-'),ML,y);y+=5;
+  doc.text('Sistema: '+(r.kwp||'-')+' kWp - '+(r.paneles||'-')+' modulos - '+(r.ninv||'-')+' inv.  |  Tecnico: '+sa(r.tecnico||'-')+'  |  Visita #'+(r.visita_num||'-'),ML,y);y+=7;
   // Alcances
   if(r.alcances){
     doc.setFillColor('#eff6ff');doc.roundedRect(ML,y,CW,4+doc.splitTextToSize(r.alcances,CW-10).length*4.5,3,3,'F');
@@ -1440,8 +1492,9 @@ function generatePDF(r){
 
   // PAGE 2 — Sembrado + Estado
   doc.addPage();deco();y=logoHdr(MT)+4;
-  y=h2('1.- INSPECCIÓN DEL SEMBRADO FOTOVOLTAICO',y);y+=2;
-  y=body(r.sem_desc,y,CW)+4;
+  y=h2('1.- INSPECCION DEL SEMBRADO FOTOVOLTAICO',y);y+=2;
+  y=body(r.sem_desc,y,CW)+3;
+  if(r.sem_estructura){y=body('Estructura y cableado: '+r.sem_estructura,y,CW)+3;}
   // 2 photos
   const w2=(CW-6)/2,h2p=w2*0.68;
   if(r.photos?.p_s2||r.photos?.p_s3){
@@ -1463,14 +1516,61 @@ function generatePDF(r){
   y+=4;
   y=semTable([
     {label:'Limpieza superficial',val:r.stData?.st_lim},
-    {label:'Estado físico módulos',val:r.stData?.st_fis},
+    
     {label:'Estructura y anclajes',val:r.stData?.st_est},
     {label:'Sombreado',val:r.stData?.st_som},
   ],y);
 
+  // PAGE 3 — Estructura de montaje
+  if(r.secsActivas?.includes('estructura_tipo')){
+    doc.addPage();deco();y=logoHdr(MT)+4;
+    y=h2('2.- TIPO Y ESTADO DE LA ESTRUCTURA DE MONTAJE',y);y+=2;
+    if(r.mat_estructura){
+      doc.setFillColor('#f5f9e8');doc.roundedRect(ML,y,CW,10,2,2,'F');
+      doc.setDrawColor(GR);doc.setLineWidth(0.3);doc.roundedRect(ML,y,CW,10,2,2,'S');
+      doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(GR);
+      doc.text('Material: '+r.mat_estructura,ML+CW/2,y+6.5,{align:'center'});
+      y+=14;
+    }
+    y=body(r.est_desc,y,CW)+4;
+    const tw3=(CW-12)/3,th3=tw3*0.72;
+    const estPhotos=[['p_est1','Estructura vista 1'],['p_est2','Estructura vista 2'],['p_est3','Detalle estructura']];
+    const hasEst=estPhotos.some(([id2])=>r.photos?.[id2]);
+    if(hasEst){
+      estPhotos.forEach(([id2,cap],i)=>{
+        if(r.photos?.[id2]){addImg(r.photos[id2],ML+i*(tw3+6),y,tw3,th3);capt(cap,ML+i*(tw3+6),y+th3+2,tw3);}
+      });
+      y+=th3+9;
+    }
+  }
+
+  // PAGE 3b — Canalizaciones
+  if(r.secsActivas?.includes('canalizaciones')){
+    doc.addPage();deco();y=logoHdr(MT)+4;
+    y=h2('3.- CANALIZACIONES Y CABLEADO',y);y+=2;
+    y=body(r.can_desc,y,CW)+4;
+    const canPhotos=[['p_can1','Canalizacion 1'],['p_can2','Canalizacion 2'],['p_can3','Canalizacion 3'],['p_can4','Canalizacion 4'],['p_can5','Canalizacion 5']];
+    const hasCan=canPhotos.some(([id2])=>r.photos?.[id2]);
+    if(hasCan){
+      for(let ci=0;ci<canPhotos.length;ci+=3){
+        const row=canPhotos.slice(ci,ci+3).filter(([id2])=>r.photos?.[id2]);
+        if(!row.length)continue;
+        const rw=(CW-(row.length-1)*6)/row.length, rh=rw*0.7;
+        row.forEach(([id2,cap],i)=>{addImg(r.photos[id2],ML+i*(rw+6),y,rw,rh);capt(cap,ML+i*(rw+6),y+rh+2,rw);});
+        y+=rh+9;
+      }
+    }
+    y=semTable([
+      {label:'Canalizaciones DC',val:r.stData?.st_can_dc},
+      {label:'Cableado DC expuesto',val:r.stData?.st_cab_dc},
+      {label:'Canalizaciones AC',val:r.stData?.st_can_ac},
+      {label:'Puesta a tierra (cableado)',val:r.stData?.st_tierra_cab},
+    ],y);
+  }
+
   // PAGE 4 — Inversores
   doc.addPage();deco();y=logoHdr(MT)+4;
-  y=h2('2.- INVERSORES Y GABINETE DC',y);y+=2;
+  y=h2('4.- INVERSORES Y GABINETE DC',y);y+=2;
   y=body(r.inv_desc,y,CW)+4;
   if(r.photos?.p_i1||r.photos?.p_i2){
     if(r.photos.p_i1)addImg(r.photos.p_i1,ML,y,w2,h2p);
@@ -1498,9 +1598,9 @@ function generatePDF(r){
   // PAGE 5 — Termografía (si aplica)
   if(r.secsActivas?.includes('termografia')){
     doc.addPage();deco();y=logoHdr(MT)+4;
-    y=h2('3.- INSPECCIÓN TERMOGRÁFICA',y);y+=2;
+    y=h2('5.- INSPECCION TERMOGRAFICA',y);y+=2;
     doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(GY);
-    doc.text(`Equipo: ${r.termo_eq||'—'}  |  Temperatura máxima detectada: ${r.termo_max||'—'} °C`,ML,y);y+=5;
+    doc.text('Equipo: '+(r.termo_eq||'-')+'  |  Temp. max detectada: '+(r.termo_max||'-')+' C',ML,y);y+=5;
     y=body(r.termo_obs,y,CW)+4;
     const tw=(CW-8)/3,th=tw*0.75;
     const termoSlots=['p_tm1','p_tm2','p_tm3','p_tm4','p_tm5','p_tm6','p_tm7','p_tm8','p_tm9','p_tm10'];
@@ -1508,7 +1608,7 @@ function generatePDF(r){
     for(let i=0;i<termoSlots.length;i+=3){
       const row=termoSlots.slice(i,i+3).filter(id=>r.photos?.[id]);
       if(row.length){
-        row.forEach((id,j)=>{addImg(r.photos[id],ML+j*(tw+4),y,tw,th);capt(`Termografía ${tn++}`,ML+j*(tw+4),y+th+2,tw)});
+        row.forEach((id,j)=>{addImg(r.photos[id],ML+j*(tw+4),y,tw,th);capt('Termografia '+tn++'',ML+j*(tw+4),y+th+2,tw)});
         y+=th+9;
       }
     }
@@ -1517,12 +1617,12 @@ function generatePDF(r){
   // PAGE 6 — Antes/Después (si aplica)
   if(r.secsActivas?.includes('antes_despues')){
     doc.addPage();deco();y=logoHdr(MT)+4;
-    y=h2('4.- EVIDENCIA ANTES Y DESPUÉS',y);y+=2;
-    [1,2,3].forEach(n=>{
+    y=h2('6.- EVIDENCIA ANTES Y DESPUES',y);y+=2;
+    [1,2,3,4,5].forEach(n=>{
       const desc=r['trab'+n];
-      const pA=r.photos?.['p_ad${n}a'],pD=r.photos?.['p_ad${n}d'];
+      const pA=r.photos?.['p_ad'+n+'a'],pD=r.photos?.['p_ad'+n+'d'];
       if(desc||pA||pD){
-        if(desc){doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(BK);doc.text(`Trabajo ${n}: ${desc}`,ML,y);y+=5;}
+        if(desc){doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(BK);doc.text('Trabajo '+n+': '+sa(desc),ML,y);y+=5;}
         if(pA||pD){
           if(pA){
             doc.setFillColor('#fef3c7');doc.roundedRect(ML,y-1,w2,5,2,2,'F');
@@ -1531,7 +1631,7 @@ function generatePDF(r){
           }
           if(pD){
             doc.setFillColor('#d1fae5');doc.roundedRect(ML+w2+6,y-6,w2,5,2,2,'F');
-            doc.setTextColor('#065f46');doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text('DESPUÉS',ML+w2+6+w2/2,y-3.5,{align:'center'});
+            doc.setTextColor('#065f46');doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text('DESPUES',ML+w2+6+w2/2,y-3.5,{align:'center'});
             addImg(pD,ML+w2+6,y,w2,h2p);capt('Estado posterior al trabajo',ML+w2+6,y+h2p+2,w2);
           }
           y+=h2p+10;
@@ -1542,8 +1642,8 @@ function generatePDF(r){
 
   // PAGE 7 — Conclusiones
   doc.addPage();deco();y=logoHdr(MT)+4;
-  y=h2('DECISIÓN DE ENCENDIDO DEL SISTEMA',y);y+=2;
-  const ecmap={si:{bg:'#ecfdf5',c:'#065f46',tx:'✅ SISTEMA SEGURO — PUEDE OPERAR CON NORMALIDAD'},cond:{bg:'#fffbeb',c:'#92400e',tx:'⚠️ SISTEMA CONDICIONADO — REQUIERE ATENCIÓN'},no:{bg:'#fef2f2',c:'#991b1b',tx:'🚫 SISTEMA DEBE PERMANECER APAGADO'}};
+  y=h2('DECISION DE ENCENDIDO DEL SISTEMA',y);y+=2;
+  const ecmap={si:{bg:'#ecfdf5',c:'#065f46',tx:'SISTEMA SEGURO - PUEDE OPERAR CON NORMALIDAD'},cond:{bg:'#fffbeb',c:'#92400e',tx:'SISTEMA CONDICIONADO - REQUIERE ATENCION'},no:{bg:'#fef2f2',c:'#991b1b',tx:'SISTEMA DEBE PERMANECER APAGADO'}};
   const em=ecmap[r.encDec]||{bg:'#f8fafc',c:GYL,tx:'No especificado'};
   const el=doc.splitTextToSize(em.tx,CW-8);
   const eh=el.length*5+8;
@@ -1562,19 +1662,19 @@ function generatePDF(r){
     doc.setFillColor('#fef2f2');doc.roundedRect(ML,y,CW,ch,3,3,'F');
     doc.setFillColor('#ef4444');doc.rect(ML,y,4,ch,'F');
     doc.setTextColor('#991b1b');doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('SERVICIO CORRECTIVO REQUERIDO',ML+8,y+6);
-    if(r.prioridad){doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text('Prioridad: '+r.prioridad,ML+8,y+12)}
+    if(r.prioridad){doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text('Prioridad: '+(r.prioridad||'').replace(/[^\x00-\x7F]/g,'').trim(),ML+8,y+12)}
     if(cl.length){doc.setTextColor('#475569');doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.text(cl,ML+8,y+18)}
     y+=ch+5;
   } else {
     doc.setFillColor('#ecfdf5');doc.roundedRect(ML,y,CW,10,3,3,'F');
     doc.setTextColor('#065f46');doc.setFont('helvetica','bold');doc.setFontSize(9);
-    doc.text('Sistema en condiciones normales — no se requiere correctivo.',ML+CW/2,y+6.5,{align:'center'});y+=14;
+    doc.text('Sistema en condiciones normales - no se requiere correctivo.',ML+CW/2,y+6.5,{align:'center'});y+=14;
   }
   // Firma
   y+=6;doc.setDrawColor(BK);doc.setLineWidth(0.5);doc.line(ML,y+12,ML+72,y+12);
   doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(GY);
-  doc.text(r.firma_n?`${r.firma_n}${r.firma_c?' · '+r.firma_c:''}`:' ',ML,y+17);
-  doc.setTextColor(GYL);doc.text(`Técnico: ${r.tecnico||'—'}  |  ${r.prov_empresa||'—'}  |  Folio: ${r.folio}`,PW-MR,y+17,{align:'right'});
+  doc.text(r.firma_n?sa(r.firma_n)+(r.firma_c?' - '+sa(r.firma_c):''):'',ML,y+17);
+  doc.setTextColor(GYL);doc.text('Tecnico: '+sa(r.tecnico||'-')+'  |  '+sa(r.prov_empresa||'-')+'  |  Folio: '+(r.folio||'-'),PW-MR,y+17,{align:'right'});
 
   doc.save(`Reporte_${(r.folio||'borrador').replace(/[^\w-]/g,'_')}_${(r.num_tienda||r.cliente||'').replace(/\s+/g,'_').substring(0,20)}.pdf`);
 }
