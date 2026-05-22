@@ -496,7 +496,7 @@ a{color:var(--green);text-decoration:none}
 
     <!-- NUEVO REPORTE -->
     <div id="vNuevo" class="view">
-      <div class="ph"><div><div class="pt">Nuevo reporte</div><div class="ps">Selecciona las secciones que aplican a este servicio</div></div></div>
+      <div class="ph"><div><div class="pt">Nuevo reporte</div><div class="ps">Selecciona el tipo de trabajo y define los alcances del servicio</div></div></div>
       <div class="fp" id="fProg"></div>
 
       <!-- STEP 0: Tipo + secciones -->
@@ -508,8 +508,8 @@ a{color:var(--green);text-decoration:none}
             <div class="sdiv">Alcances del servicio</div>
             <div class="fg c1"><div class="ff"><label>Define los alcances de este servicio <span class="req">*</span></label><textarea id="f_alcances" rows="3" placeholder="Describe qué trabajo se realizará y hasta dónde llega el alcance. Esto protege a ambas partes en caso de disputas."></textarea></div></div>
             <div class="fg c1"><div class="ff"><label>Exclusiones (qué NO incluye)</label><textarea id="f_exclusiones" rows="2" placeholder="Ej: No incluye sustitución de inversores ni trabajos en tablero general..."></textarea></div></div>
-            <div class="sdiv">Secciones del reporte</div>
-            <div style="font-size:12px;color:var(--slate500);margin-bottom:12px">Selecciona las secciones que aplican a este servicio</div>
+            <div class="sdiv">Secciones incluidas automáticamente</div>
+            <div style="font-size:12px;color:var(--slate500);margin-bottom:10px">Estas secciones se incluirán en el reporte según el tipo de trabajo. Puedes ajustarlas.</div>
             <div id="secsWrap"></div>
           </div>
         </div>
@@ -551,19 +551,18 @@ a{color:var(--green);text-decoration:none}
         <div class="card">
           <div class="ctitle">Sistema fotovoltaico instalado</div>
           <div class="fg c4">
-            <div class="ff"><label>Potencia (kWp)</label><input type="number" id="f_kwp" placeholder="12.28" step="0.01"></div>
+            <div class="ff"><label>Potencia total (kWp)</label><input type="number" id="f_kwp" placeholder="12.28" step="0.01"></div>
             <div class="ff"><label>N° módulos</label><input type="number" id="f_paneles" placeholder="27"></div>
-            <div class="ff"><label>N° inversores</label><input type="number" id="f_ninv" placeholder="2"></div>
+            <div class="ff"><label>N° inversores</label><input type="number" id="f_ninv" placeholder="2" oninput="renderInvFields()"></div>
             <div class="ff"><label>Año instalación</label><input type="number" id="f_anio" placeholder="2022"></div>
           </div>
           <div class="fg">
             <div class="ff"><label>Marca paneles</label><input type="text" id="f_mpanel" placeholder="Canadian Solar"></div>
             <div class="ff"><label>Modelo paneles</label><input type="text" id="f_modpanel" placeholder="CS3W-455MS"></div>
           </div>
-          <div class="fg">
-            <div class="ff"><label>Marca inversor</label><input type="text" id="f_minv" placeholder="Fronius"></div>
-            <div class="ff"><label>Modelo inversor</label><input type="text" id="f_modinv" placeholder="SYMO 10.0-3M"></div>
-          </div>
+          <div class="sdiv">Detalle por inversor</div>
+          <div style="font-size:12px;color:var(--slate500);margin-bottom:10px">Ingresa el número de inversores arriba para ver los campos por inversor</div>
+          <div id="invFieldsWrap"></div>
         </div>
         <div class="fnav"><button class="btn btn-s" onclick="fBack()">← Atrás</button><button class="btn btn-p" onclick="fNext()">Continuar →</button></div>
       </div>
@@ -579,34 +578,22 @@ a{color:var(--green);text-decoration:none}
         <div class="card">
           <div class="ctitle">Mediciones eléctricas con multímetro</div>
           <div style="background:var(--blue-lt);border:1px solid #bfdbfe;border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:13px;color:#1d4ed8">
-            📐 Registra las mediciones tomadas con multímetro en campo. Estas lecturas quedan evidenciadas en el reporte oficial.
+            📐 Los campos de cada inversor y sus strings se generan automáticamente según los datos que ingresaste en el paso anterior.
           </div>
-          <div class="sdiv">Lecturas del inversor</div>
+          <div id="medInvWrap">
+            <div style="text-align:center;padding:24px;color:var(--slate400);font-size:13px">
+              Regresa al paso de datos generales e ingresa el número de inversores para ver los campos de medición.
+            </div>
+          </div>
+          <div class="sdiv">Mediciones generales del sistema</div>
           <div class="med-grid">
-            <div class="med-item"><label>Potencia actual<span class="unit">kW</span></label><input type="number" id="m_pot" placeholder="9.8" step="0.1"></div>
-            <div class="med-item"><label>Voltaje DC<span class="unit">V</span></label><input type="number" id="m_vdc" placeholder="380"></div>
-            <div class="med-item"><label>Voltaje AC<span class="unit">V</span></label><input type="number" id="m_vac" placeholder="220"></div>
-            <div class="med-item"><label>Corriente DC<span class="unit">A</span></label><input type="number" id="m_idc" placeholder="25.6" step="0.1"></div>
-            <div class="med-item"><label>Temperatura inv.<span class="unit">°C</span></label><input type="number" id="m_temp" placeholder="42"></div>
             <div class="med-item"><label>kWh hoy<span class="unit">kWh</span></label><input type="number" id="m_kwh_hoy" placeholder="38.4" step="0.1"></div>
             <div class="med-item"><label>kWh este mes<span class="unit">kWh</span></label><input type="number" id="m_kwh_mes" placeholder="1040" step="0.1"></div>
-            <div class="med-item"><label>Factor de potencia<span class="unit">FP</span></label><input type="number" id="m_fp" placeholder="0.98" step="0.01" min="0" max="1"></div>
-          </div>
-          <div class="sdiv">Mediciones por string / serie</div>
-          <div class="fg c4">
-            <div class="ff"><label>String 1 — Voc (V)</label><input type="number" id="m_s1_v" placeholder="—"></div>
-            <div class="ff"><label>String 1 — Isc (A)</label><input type="number" id="m_s1_i" placeholder="—" step="0.1"></div>
-            <div class="ff"><label>String 2 — Voc (V)</label><input type="number" id="m_s2_v" placeholder="—"></div>
-            <div class="ff"><label>String 2 — Isc (A)</label><input type="number" id="m_s2_i" placeholder="—" step="0.1"></div>
-          </div>
-          <div class="fg c4">
-            <div class="ff"><label>String 3 — Voc (V)</label><input type="number" id="m_s3_v" placeholder="—"></div>
-            <div class="ff"><label>String 3 — Isc (A)</label><input type="number" id="m_s3_i" placeholder="—" step="0.1"></div>
-            <div class="ff"><label>Resistencia tierra (Ω)</label><input type="number" id="m_tierra" placeholder="—" step="0.1"></div>
-            <div class="ff"><label>Aislamiento DC (MΩ)</label><input type="number" id="m_aislam" placeholder="—" step="0.1"></div>
+            <div class="med-item"><label>Resistencia tierra<span class="unit">Ω</span></label><input type="number" id="m_tierra" placeholder="—" step="0.1"></div>
+            <div class="med-item"><label>Aislamiento DC<span class="unit">MΩ</span></label><input type="number" id="m_aislam" placeholder="—" step="0.1"></div>
           </div>
           <div class="fg c1" style="margin-top:12px">
-            <div class="ff"><label>Observaciones sobre las mediciones</label><textarea id="m_obs" rows="3" placeholder="Notas relevantes sobre las lecturas obtenidas, desviaciones respecto a valores nominales..."></textarea></div>
+            <div class="ff"><label>Observaciones sobre las mediciones</label><textarea id="m_obs" rows="3" placeholder="Notas relevantes, desviaciones respecto a valores nominales, lecturas anómalas..."></textarea></div>
           </div>
         </div>
         <div class="fnav"><button class="btn btn-s" onclick="fBack()">← Atrás</button><button class="btn btn-p" onclick="fNext()">Continuar →</button></div>
@@ -780,7 +767,6 @@ const SECS=[
   {id:'termografia',icon:'🌡️',name:'Inspección termográfica',desc:'Fotos con cámara termográfica'},
   {id:'antes_despues',icon:'📸',name:'Antes y después',desc:'Evidencia fotográfica de trabajos realizados'},
   {id:'monitoreo',icon:'💻',name:'Monitoreo en plataforma',desc:'Capturas y datos de generación'},
-  {id:'seguridad',icon:'🦺',name:'Checklist de seguridad',desc:'Verificación de EPP y condiciones seguras'},
 ];
 
 const STLABELS={ok:'✓ OK',warn:'⚠ Obs.',bad:'✗ Falla',na:'N/A'};
@@ -879,14 +865,11 @@ function initForm(){
       <div class="td">${t.desc}</div>
     </button>`).join('');
   // Secciones
-  document.getElementById('secsWrap').innerHTML=SECS.map(s=>`
-    <div class="sec-toggle" id="stog_${s.id}" onclick="toggleSec('${s.id}',this)">
-      <div class="sec-info">
-        <div class="sec-icon">${s.icon}</div>
-        <div><div class="sec-name">${s.name}</div><div class="sec-desc">${s.desc}</div></div>
-      </div>
-      <div class="sec-check" id="schk_${s.id}"></div>
-    </div>`).join('');
+  document.getElementById('secsWrap').innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap">` +
+    SECS.map(s=>`<div class="sec-toggle" id="stog_${s.id}" onclick="toggleSec('${s.id}',this)" style="padding:8px 14px;border-radius:99px;border:2px solid var(--slate200);background:white;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--slate600);transition:all .15s">
+      <span>${s.icon}</span><span>${s.name}</span>
+      <span class="sec-check" id="schk_${s.id}" style="font-size:12px"></span>
+    </div>`).join('') + `</div>`;
   // Reset photo slots
   document.querySelectorAll('.ps').forEach(slot=>{
     slot.querySelector('img')?.remove();
@@ -921,29 +904,40 @@ function selTipo(id,btn){
     prev:['sembrado','inversores','tablero','monitoreo'],
     corr:['sembrado','inversores','tablero','antes_despues'],
     mon:['monitoreo','inversores'],
-    rein:['sembrado','inversores','tablero','antes_despues','seguridad'],
-    int:['sembrado','inversores','tablero','termografia','antes_despues','monitoreo','seguridad'],
+    rein:['sembrado','inversores','tablero','antes_despues'],
+    int:['sembrado','inversores','tablero','termografia','antes_despues','monitoreo'],
   };
   secsActivas=new Set(defaults[id]||[]);
   SECS.forEach(s=>{
     const tog=document.getElementById('stog_'+s.id);
     const chk=document.getElementById('schk_'+s.id);
+    if(!tog)return;
     const on=secsActivas.has(s.id);
-    tog.classList.toggle('on',on);
-    chk.textContent=on?'✓':'';
+    tog.style.background=on?'var(--g50)':'white';
+    tog.style.borderColor=on?'var(--green)':'var(--slate200)';
+    tog.style.color=on?'var(--green)':'var(--slate600)';
+    if(chk)chk.textContent=on?' ✓':'';
   });
   document.getElementById('btn0').disabled=false;
 }
 
 function toggleSec(id,tog){
-  if(secsActivas.has(id)){secsActivas.delete(id);tog.classList.remove('on');document.getElementById('schk_'+id).textContent=''}
-  else{secsActivas.add(id);tog.classList.add('on');document.getElementById('schk_'+id).textContent='✓'}
+  if(secsActivas.has(id)){
+    secsActivas.delete(id);
+    tog.style.background='white';tog.style.borderColor='var(--slate200)';tog.style.color='var(--slate600)';
+    document.getElementById('schk_'+id).textContent='';
+  } else {
+    secsActivas.add(id);
+    tog.style.background='var(--g50)';tog.style.borderColor='var(--green)';tog.style.color='var(--green)';
+    document.getElementById('schk_'+id).textContent=' ✓';
+  }
 }
 
 function fNext(){
   document.getElementById('fs'+fStep).classList.remove('active');
   fStep++;
   if(fStep===2)buildSecContent();
+  if(fStep===3)buildMedInvWrap();
   document.getElementById('fs'+fStep).classList.add('active');
   renderFProg();
   if(fStep===STEPS_LABELS.length-1)buildSummary();
@@ -975,15 +969,14 @@ function getSecHTML(id,name,icon){
     </div>`;
 
   if(id==='sembrado') return secWrap(`
-    <div class="fg c1" style="margin-bottom:14px"><div class="ff"><label>Estado general del sembrado</label><textarea id="f_sem_desc" rows="3" placeholder="Estado de módulos, orientación, suciedad, daños visibles, sombreado..."></textarea></div></div>
+    <div class="fg c1" style="margin-bottom:14px"><div class="ff"><label>Estado general del sembrado</label><textarea id="f_sem_desc" rows="3" placeholder="Estado de módulos, orientación, condiciones de suciedad, sombreado, observaciones generales..."></textarea></div></div>
+    <div class="fg c1" style="margin-bottom:14px"><div class="ff"><label>Observaciones sobre estructura, anclajes y cableado</label><textarea id="f_sem_estructura" rows="2" placeholder="Estado de la estructura de montaje, tornillería, anclajes, cableado DC exterior..."></textarea></div></div>
     <div class="sdiv">Fotografías del sembrado</div>
     <div class="pg pg3" style="margin-bottom:14px">
-      ${psHTML('s1','Vista aérea / general')}${psHTML('s2','Detalle de módulos')}${psHTML('s3','Estructura y rack')}
-      ${psHTML('s4','Anclajes y tornillería')}${psHTML('s5','Cableado DC exterior')}${psHTML('s6','Vista adicional')}
+      ${psHTML('s1','Vista aérea / general')}${psHTML('s2','Módulos — detalle 1')}${psHTML('s3','Módulos — detalle 2')}
     </div>
     <div class="sdiv">Estado de módulos</div>
     ${stRow('Limpieza superficial','st_lim','✓ Limpio','⚠ Sucio','✗ Crítico')}
-    ${stRow('Estado físico (grietas/roturas)','st_fis','✓ Sin daños','⚠ Daño menor','✗ Daño severo')}
     ${stRow('Estructura y anclajes','st_est','✓ Firme','⚠ Verificar','✗ Inseguro')}
     ${stRow('Sombreado / obstrucción','st_som','✓ Sin sombra','⚠ Parcial','✗ Severo',true)}`);
 
@@ -1023,14 +1016,24 @@ function getSecHTML(id,name,icon){
     </div>`);
 
   if(id==='antes_despues') return secWrap(`
-    <div style="font-size:13px;color:var(--slate600);margin-bottom:14px">Documenta el estado antes y después de cada trabajo realizado.</div>
-    ${[1,2,3].map(n=>`
-      <div class="sdiv">Trabajo ${n}</div>
-      <div class="fg c1" style="margin-bottom:10px"><div class="ff"><label>Descripción del trabajo ${n}</label><input type="text" id="f_trab${n}" placeholder="Ej: Sustitución de fusibles DC string 2"></div></div>
+    <div style="font-size:13px;color:var(--slate600);margin-bottom:14px">Documenta el estado antes y después de cada trabajo realizado. No es necesario llenar todos los espacios.</div>
+    ${[1,2,3,4,5].map(n=>`
+      <div class="sdiv">Trabajo ${n} <span style="font-size:10px;font-weight:400;color:var(--slate400)">(opcional)</span></div>
+      <div class="fg c1" style="margin-bottom:10px"><div class="ff"><label>Descripción del trabajo ${n} y cambios realizados</label><input type="text" id="f_trab${n}" placeholder="Ej: Sustitución de fusibles DC string 2, reapriete de tornillería..."></div></div>
       <div class="ad-pair">
-        <div><div class="ad-label ad-antes">ANTES</div>${psHTML('ad${n}a','Antes — trabajo '+n)}</div>
-        <div><div class="ad-label ad-despues">DESPUÉS</div>${psHTML('ad${n}d','Después — trabajo '+n)}</div>
-      </div>`).join('')}`);
+        <div><div class="ad-label ad-antes">ANTES</div>${psHTML('ad'+n+'a','Antes — trabajo '+n)}</div>
+        <div><div class="ad-label ad-despues">DESPUÉS</div>${psHTML('ad'+n+'d','Después — trabajo '+n)}</div>
+      </div>`).join('')}
+    <div class="sdiv">Documento de respaldo del supervisor</div>
+    <div style="background:var(--blue-lt);border:1px solid #bfdbfe;border-radius:var(--r);padding:10px 14px;margin-bottom:12px;font-size:13px;color:#1d4ed8">
+      📄 Sube el PDF del <strong>Estándar de Competencia del Supervisor de la Instalación</strong>. Este documento queda como respaldo oficial del servicio.
+    </div>
+    <div style="border:2px dashed var(--slate300);border-radius:var(--r);padding:20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--slate50)" id="pdfDropZone" onclick="document.getElementById('f_pdf_supervisor').click()">
+      <input type="file" id="f_pdf_supervisor" accept=".pdf" style="display:none" onchange="loadPDF(this)">
+      <div style="font-size:28px;margin-bottom:8px">📋</div>
+      <div style="font-size:13px;font-weight:600;color:var(--slate700)" id="pdfFileName">Toca para subir el PDF del estándar de competencia</div>
+      <div style="font-size:11px;color:var(--slate400);margin-top:4px">Solo archivos .PDF</div>
+    </div>`);
 
   if(id==='monitoreo') return secWrap(`
     <div class="fg">
@@ -1596,6 +1599,90 @@ function delProv(id){
 }
 
 // ═══════ INTELIGENCIA ═══════
+function renderInvFields(){
+  const n=parseInt(document.getElementById('f_ninv')?.value)||0;
+  const wrap=document.getElementById('invFieldsWrap');
+  if(!wrap)return;
+  if(n===0){wrap.innerHTML='<div style="color:var(--slate400);font-size:13px;padding:8px 0">Ingresa el número de inversores para ver los campos</div>';return}
+  let html='';
+  for(let i=1;i<=Math.min(n,6);i++){
+    html+=`<div style="background:var(--slate50);border:1px solid var(--slate200);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:12px">
+      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">Inversor ${i}</div>
+      <div class="fg" style="margin-bottom:10px">
+        <div class="ff"><label>Marca y modelo</label><input type="text" id="inv${i}_modelo" placeholder="Fronius SYMO 10.0-3M"></div>
+        <div class="ff"><label>Potencia nominal (kW)</label><input type="number" id="inv${i}_pot_nom" placeholder="10.0" step="0.1"></div>
+      </div>
+      <div class="fg c4" style="margin-bottom:10px">
+        <div class="ff"><label>Potencia actual (kW)</label><input type="number" id="inv${i}_pot_act" placeholder="9.2" step="0.1"></div>
+        <div class="ff"><label>V salida AC (V)</label><input type="number" id="inv${i}_vac" placeholder="220"></div>
+        <div class="ff"><label>I salida AC (A)</label><input type="number" id="inv${i}_iac" placeholder="41.8" step="0.1"></div>
+        <div class="ff"><label>Temperatura (°C)</label><input type="number" id="inv${i}_temp" placeholder="42"></div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:var(--slate600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">N° de strings conectados a este inversor</div>
+      <div class="fg c4" style="margin-bottom:8px">
+        <div class="ff"><label>N° strings</label><input type="number" id="inv${i}_nstr" placeholder="3" min="1" max="12" oninput="renderStrFields(${i})"></div>
+        <div class="ff"></div><div class="ff"></div><div class="ff"></div>
+      </div>
+      <div id="inv${i}_strWrap"></div>
+    </div>`;
+  }
+  wrap.innerHTML=html;
+}
+
+function renderStrFields(invNum){
+  const n=parseInt(document.getElementById('inv'+invNum+'_nstr')?.value)||0;
+  const wrap=document.getElementById('inv'+invNum+'_strWrap');
+  if(!wrap)return;
+  if(n===0){wrap.innerHTML='';return}
+  let html=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px">`;
+  for(let s=1;s<=Math.min(n,12);s++){
+    html+=`<div class="med-item"><label>Str${s} Voc<span class="unit">V</span></label><input type="number" id="inv${invNum}_s${s}_v" placeholder="—" step="0.1"></div>
+           <div class="med-item"><label>Str${s} Isc<span class="unit">A</span></label><input type="number" id="inv${invNum}_s${s}_i" placeholder="—" step="0.1"></div>`;
+  }
+  html+='</div>';
+  wrap.innerHTML=html;
+}
+
+function buildMedInvWrap(){
+  const n=parseInt(document.getElementById('f_ninv')?.value)||0;
+  const wrap=document.getElementById('medInvWrap');
+  if(!wrap)return;
+  if(n===0){wrap.innerHTML='<div style="text-align:center;padding:24px;color:var(--slate400);font-size:13px">Regresa al paso anterior e ingresa el número de inversores.</div>';return}
+  let html='';
+  for(let i=1;i<=Math.min(n,6);i++){
+    const modelo=document.getElementById('inv'+i+'_modelo')?.value||`Inversor ${i}`;
+    const nstr=parseInt(document.getElementById('inv'+i+'_nstr')?.value)||0;
+    html+=`<div style="background:var(--slate50);border:1px solid var(--slate200);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:12px">
+      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">Inversor ${i} — ${modelo}</div>
+      <div class="med-grid" style="margin-bottom:10px">
+        <div class="med-item"><label>Potencia actual<span class="unit">kW</span></label><input type="number" id="m_inv${i}_pot" placeholder="9.2" step="0.1"></div>
+        <div class="med-item"><label>V salida AC<span class="unit">V</span></label><input type="number" id="m_inv${i}_vac" placeholder="220"></div>
+        <div class="med-item"><label>I salida AC<span class="unit">A</span></label><input type="number" id="m_inv${i}_iac" placeholder="41.8" step="0.1"></div>
+        <div class="med-item"><label>V entrada DC<span class="unit">V</span></label><input type="number" id="m_inv${i}_vdc" placeholder="380"></div>
+      </div>`;
+    if(nstr>0){
+      html+=`<div style="font-size:11px;font-weight:600;color:var(--slate500);margin-bottom:8px">Mediciones por string</div>
+             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">`;
+      for(let s=1;s<=Math.min(nstr,12);s++){
+        html+=`<div class="med-item"><label>Str${s} Voc<span class="unit">V</span></label><input type="number" id="m_inv${i}_s${s}_v" placeholder="—" step="0.1"></div>
+               <div class="med-item"><label>Str${s} Isc<span class="unit">A</span></label><input type="number" id="m_inv${i}_s${s}_i" placeholder="—" step="0.1"></div>`;
+      }
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  wrap.innerHTML=html;
+}
+
+function loadPDF(input){
+  if(!input.files?.[0])return;
+  const file=input.files[0];
+  document.getElementById('pdfFileName').textContent='✓ '+file.name;
+  document.getElementById('pdfDropZone').style.borderColor='var(--green)';
+  document.getElementById('pdfDropZone').style.background='var(--g50)';
+}
+
+
 function renderInt(){
   const tot=reportes.length;
   const corr=reportes.filter(r=>r.requiereCorr).length;
